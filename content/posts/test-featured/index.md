@@ -1,9 +1,9 @@
 ---
-title: "{{ replace .TranslationBaseName "-" " " | title }}"
+title: "测试文章"
 subtitle: ""
-date: {{ .Date }}
-lastmod: {{ .Date }}
-draft: false
+date: 2024-02-26T21:02:08+08:00
+lastmod: 2024-02-26T21:02:08+08:00
+draft: true
 author: "PanJM"
 authorLink: "https://github.com/pjimming/"
 description: ""
@@ -19,5 +19,12 @@ featuredImagePreview: "featured-image.png"
 ---
 
 <!--more-->
+测试文章
+## 测试图片
 
----
+![pic](assets/featured-image.png)
+
+## 标题1
+内容1
+## 标题2
+内容2

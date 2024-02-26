@@ -1,5 +1,9 @@
+clean:
+	rm -rf public/
+
 serve:
-	hugo serve --disableFastRender
+	make clean
+	hugo serve --disableFastRender --buildDrafts
 
 post:
-	hugo new content posts/$(title).md
+	hugo new content posts/$(title)/index.md
