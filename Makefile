@@ -3,7 +3,7 @@ clean:
 
 serve:
 	make clean
-	hugo serve --disableFastRender --buildDrafts
+	hugo serve --disableFastRender --buildDrafts --gc
 
 post:
 	hugo new content posts/$(title)/index.md
