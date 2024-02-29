@@ -1,5 +1,5 @@
 ---
-title: "使用shell脚本实现同步git项目至github下"
+title: "使用shell脚本同步git项目至github"
 subtitle: ""
 date: 2024-02-29T11:25:01+08:00
 lastmod: 2024-02-29T11:25:01+08:00
@@ -61,7 +61,7 @@ do
             cd $file
             git stash
             git pull
-            # 创建远程github仓库
+            # 创建远程私有github仓库
             # API：https://docs.github.com/zh/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-for-the-authenticated-user
             if ! git remote -v | grep git@github.com:$user/$file.git; then
                 curl -L -s \
@@ -70,7 +70,7 @@ do
                 -H "Authorization: Bearer $github_token" \
                 -H "X-GitHub-Api-Version: 2022-11-28" \
                 https://api.github.com/user/repos \
-                -d "{\"name\":\"$file\",\"homepage\":\"https://github.com\",\"private\":true}" \
+                -d "{\"name\":\"$file\",\"private\":true}" \
                 --compressed
                 # 添加remote
                 git remote set-url --add origin git@github.com:$user/$file.git
