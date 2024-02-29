@@ -4,7 +4,7 @@ baseURL = "http://example.org/"
 theme = "LoveIt"
 
 # 网站标题
-title = "潘江明｜Blog"
+title = "江明说"
 
 # 网站语言, 仅在这里 CN 大写 ["en", "zh-CN", "fr", "pl", ...]
 languageCode = "zh-CN"
@@ -85,9 +85,9 @@ fingerprint = ""
 #  日期格式
 dateFormat = "2006-01-02"
 # 网站标题, 用于 Open Graph 和 Twitter Cards
-title = "panjm's blog"
+title = "江明说"
 # 网站描述, 用于 RSS, SEO, Open Graph 和 Twitter Cards
-description = "潘江明的博客"
+description = "江明说万物"
 # 网站图片, 用于 Open Graph 和 Twitter Cards
 images = ["/logo.png"]
 
@@ -102,7 +102,7 @@ mobileMode = "auto"
 # LOGO 的 URL
 logo = ""
 # 标题名称
-name = "PanJM's Blog"
+name = "江明说"
 # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
 pre = ""
 # 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
@@ -195,7 +195,7 @@ gravatarEmail = ""
 # 主页显示头像的 URL
 avatarURL = "/images/avatar.jpeg"
 #  主页显示的网站标题 (支持 HTML 格式)
-title = "PanJM's Blog"
+title = "江明说"
 # 主页显示的网站副标题 (允许 HTML 格式)
 subtitle = "不积跬步，无以至千里。不积小流，无以成江海。"
 # 是否为副标题显示打字机动画
