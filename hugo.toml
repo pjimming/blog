@@ -4,7 +4,7 @@ baseURL = "http://example.org/"
 theme = "LoveIt"
 
 # 网站标题
-title = "江明说"
+title = "江明说|Jimmy Talk"
 
 # 网站语言, 仅在这里 CN 大写 ["en", "zh-CN", "fr", "pl", ...]
 languageCode = "zh-CN"
@@ -85,9 +85,9 @@ fingerprint = ""
 #  日期格式
 dateFormat = "2006-01-02"
 # 网站标题, 用于 Open Graph 和 Twitter Cards
-title = "江明说"
+title = "江明说|Jimmy Talk"
 # 网站描述, 用于 RSS, SEO, Open Graph 和 Twitter Cards
-description = "江明说万物"
+description = "江明说"
 # 网站图片, 用于 Open Graph 和 Twitter Cards
 images = ["/logo.png"]
 
@@ -102,13 +102,13 @@ mobileMode = "auto"
 # LOGO 的 URL
 logo = ""
 # 标题名称
-name = "江明说"
+name = "江明说|Jimmy Talk"
 # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
 pre = ""
 # 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
 post = ""
 #  是否为标题显示打字机动画
-typeit = false
+typeit = true
 
 # 页面底部信息配置
 [params.footer]
@@ -494,9 +494,9 @@ speed = 100
 # 光标的闪烁速度 (单位是毫秒)
 cursorSpeed = 1000
 # 光标的字符 (支持 HTML 格式)
-cursorChar = "|"
+cursorChar = ""
 # 打字结束之后光标的持续时间 (单位是毫秒, "-1" 代表无限大)
-duration = -1
+duration = 0
 
 # 网站验证代码，用于 Google/Bing/Yandex/Pinterest/Baidu
 [params.verification]
