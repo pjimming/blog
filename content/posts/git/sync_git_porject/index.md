@@ -41,7 +41,7 @@ featuredImagePreview: "featured-image.png"
 
 在需要同步的目录下，新建一个shell文件，名为`sync_git_project.sh`​，代码内容如下：
 
-```sh
+```shell
 #!/bin/bash
 
 user='' # 填入github用户名

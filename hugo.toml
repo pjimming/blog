@@ -394,7 +394,7 @@ shortname = ""
 # 
 clientId = ""
 clientSecret = ""
-enable = true
+enable = false
 owner = ""
 repo = ""
 # Valine 评论系统设置
@@ -453,15 +453,15 @@ repo = ""
 [params.page.comment.giscus]
 # 你可以参考官方文档来使用下列配置
 category = "Announcements"
-categoryId = ""
-enable = false
-repo = ""
-repoId = ""
+categoryId = "DIC_kwDOLZmgDc4Cdm7x"
+enable = true
+repo = "pjimming/blog-comment"
+repoId = "R_kgDOLZmgDQ"
 # 为空时自动适配当前主题 i18n 配置
-darkTheme = "dark"
+darkTheme = "preferred_color_scheme"
 emitMetadata = "0"
-inputPosition = "bottom"
-lang = ""
+inputPosition = "top"
+lang = "zh-CN"
 lazyLoading = false
 lightTheme = "light"
 mapping = "pathname"
