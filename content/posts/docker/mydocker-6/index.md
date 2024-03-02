@@ -301,3 +301,18 @@ root@pjm2001:~#
 这样就可以把宿主机上 80 端口的 TCP 请求转发到 Namespace 中的地址172.18.0.2:80,从而实现外部的应用调用。
 
 ‍
+## 4. 结尾
+做完上述实验之后，记得恢复网络设置。
+```shell
+root@pjm2001:~# ip link delete veth0
+root@pjm2001:~# ip link delete br0
+root@pjm2001:~# ping github.com
+PING github.com (20.205.243.166) 56(84) bytes of data.
+64 bytes from 20.205.243.166 (20.205.243.166): icmp_seq=1 ttl=100 time=236 ms
+64 bytes from 20.205.243.166 (20.205.243.166): icmp_seq=2 ttl=100 time=233 ms
+^C
+--- github.com ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1266ms
+rtt min/avg/max/mdev = 233.168/234.758/236.349/1.590 ms
+root@pjm2001:~# ip netns delete ns1
+```
