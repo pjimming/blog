@@ -22,7 +22,6 @@ featuredImagePreview: "featured-image.png"
 
 ---
 
-# 第六章 容器网络
 
 ## 1. Linux 虚拟网络设备
 
