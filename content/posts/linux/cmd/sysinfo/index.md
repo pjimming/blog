@@ -17,7 +17,7 @@ featuredImage: "featured-image.png"
 featuredImagePreview: "featured-image.png"
 
 ---
-介绍常用Linux系统状况相关的命令
+介绍Linux常用系统状况相关的命令
 <!--more-->
 
 ---
