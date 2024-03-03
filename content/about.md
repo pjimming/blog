@@ -17,9 +17,8 @@ featuredImage: ""
 featuredImagePreview: ""
 
 ---
-
 <!--more-->
-
+---
 ## 关于我
 我是潘江明。
 

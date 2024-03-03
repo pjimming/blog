@@ -130,6 +130,21 @@ featuredImagePreview: "featured-image.png"
         ```
         
         这将按照进程的完整命令行参数进行排序。
+
+    7. 其中**STAT**状态位常见的状态字符有:
+        - `D`：无法中断的休眠状态（通常 IO 的进程）； 
+        - `R`：正在运行可中在队列中可过行的； 
+        - `S`：处于休眠状态； 
+        - `T`：停止或被追踪； 
+        - `W`：进入内存交换 （从内核2.6开始无效）； 
+        - `X`：死掉的进程 （基本很少见）； 
+        - `Z`：僵尸进程； 
+        - `<`：优先级高的进程 
+        - `N`：优先级较低的进程 
+        - `L`：有些页被锁进内存； 
+        - `s`：进程的领导者（在它之下有子进程）； 
+        - `l`：多线程，克隆线程（使用 CLONE_THREAD, 类似 NPTL pthreads）； 
+        - `+`：位于后台的进程组；
     
 6. ​ **`-ww`：** 不截断输出。在输出中不限制宽度，这样可以显示完整的命令行。
   
@@ -210,7 +225,7 @@ featuredImagePreview: "featured-image.png"
     ifconfig
     ```
   
-2.  ​**`interface`：** 仅显示指定网络接口的信息。
+2. `interface`： 仅显示指定网络接口的信息。
   
     ```bash
     ifconfig eth0
@@ -263,10 +278,3 @@ featuredImagePreview: "featured-image.png"
     ```bash
     ifconfig --help
     ```
-  
-
-‍
-
-‍
-
-‍
