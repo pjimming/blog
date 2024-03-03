@@ -20,15 +20,15 @@ featuredImagePreview: ""
 <!--more-->
 ---
 ## 关于我
-我是潘江明。
+我是潘江明，始于2001-09-05。
 
-一个有奇怪想法、整天逼逼叨叨的人。
+一个有奇怪想法、整天逼逼叨叨或沉默不语的人，一个无趣的人。
 
 我在浙江省临安中学度过了快乐的三年。
 
-现就读于浙江科技大学，计算机科学与技术专业。
+本科就读于浙江科技大学，计算机科学与技术专业。
 
-野生Gopher，不知名互联网公司打工人。
+ACM败犬，野生Gopher，不知名互联网公司打工人。
 
 爱好：编程，美女。
 
@@ -38,6 +38,17 @@ featuredImagePreview: ""
 
 ## 关于江明说
 
-> 好记性不如烂博客。
+{{< admonition info "涉及技术栈、组件以及工具" >}}
+博客框架：[Hugo](https://github.com/gohugoio/hugo)
 
-江明说代码，说生活，说万物。
+Hugo主题：[LoveIt](https://github.com/dillonzq/LoveIt)
+
+发布平台：[Netlify](https://www.netlify.com/)
+
+评论系统：[Giscus](https://github.com/giscus/giscus)
+{{< /admonition >}}
+
+> 好记性不如烂博客。
+>
+> 江明说代码，说生活，说万物。
+
