@@ -1,5 +1,5 @@
 ---
-title: "Linux 系统中 Load Average 的二三事"
+title: "Linux系统中Load Average的二三事"
 subtitle: ""
 date: 2024-03-03T20:04:20+08:00
 lastmod: 2024-03-03T20:04:20+08:00
