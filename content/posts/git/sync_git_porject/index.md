@@ -10,14 +10,15 @@ description: ""
 license: ""
 images: []
 
-tags: [shell,git]
+tags: [shell, git]
 categories: [git]
 
 featuredImage: "featured-image.png"
 featuredImagePreview: "featured-image.png"
-
 ---
-同步目录下git项目到github，实现自动化创建仓库，自动化上传
+
+同步目录下 git 项目到 github，实现自动化创建仓库，自动化上传
+
 <!--more-->
 
 ---
@@ -26,20 +27,21 @@ featuredImagePreview: "featured-image.png"
 
 1. Github Token
 
-    打开[GitHub Token New](https://github.com/settings/tokens/new)页面，勾选`repo`​选项，如下图所示
-    
-    ​![image](assets/image-20240229114924-mh919b2.png)​
+   打开[GitHub Token New](https://github.com/settings/tokens/new)页面，勾选`repo`​ 选项，如下图所示
 
-    拉至页面最下面，生成Token，最后复制该Token，保存好
-    
-    ​![image](assets/image-20240229115142-4x342qb.png)​
+   ​![image](assets/image-20240229114924-mh919b2.png)​
+
+   拉至页面最下面，生成 Token，最后复制该 Token，保存好
+
+   ​![image](assets/image-20240229115142-4x342qb.png)​
+
 2. 切换分支
 
-    把需要同步的git项目迁移到同一个文件夹内，并且把这些项目的git分支使用`git checkout [branch]`​命令切换到开发的主分支上，并且保证暂存区无修改内容。
+   把需要同步的 git 项目迁移到同一个文件夹内，并且把这些项目的 git 分支使用`git checkout [branch]`​ 命令切换到开发的主分支上，并且保证暂存区无修改内容。
 
 ## 1. 代码
 
-在需要同步的目录下，新建一个shell文件，名为`sync_git_project.sh`​，代码内容如下：
+在需要同步的目录下，新建一个 shell 文件，名为`sync_git_project.sh`​，代码内容如下：
 
 ```shell
 #!/bin/bash
@@ -88,10 +90,10 @@ done
 
 ## 2. 运行
 
-在终端执行下面的命令，即可同步项目至github
+在终端执行下面的命令，即可同步项目至 github
 
 ```bash
 bash sync_git_project.sh
 ```
 
-等待一段时间后，可以发现目录内的git项目已全部同步至github，并且如果之前没有该repo，也自动创建了。
+等待一段时间后，可以发现目录内的 git 项目已全部同步至 github，并且如果之前没有该 repo，也自动创建了。
