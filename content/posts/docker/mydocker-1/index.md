@@ -16,8 +16,11 @@ categories: [docker]
 featuredImage: "featured-image.png"
 featuredImagePreview: "featured-image.png"
 
+outdatedInfoWarning: true
 ---
-关于环境配置、docker简介以及Go相关的使用
+
+关于环境配置、docker 简介以及 Go 相关的使用
+
 <!--more-->
 
 ---
@@ -38,10 +41,10 @@ featuredImagePreview: "featured-image.png"
 
 - 优点：加速开发效率，利用容器合作开发，使开发人员不用担心配置环境的问题。
 
-WSL环境docker使用：[WSL 上的 Docker 容器入门 | Microsoft Learn](https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/wsl-containers)
+WSL 环境 docker 使用：[WSL 上的 Docker 容器入门 | Microsoft Learn](https://learn.microsoft.com/zh-cn/windows/wsl/tutorials/wsl-containers)
 
 ## GO
 
-golang安装：[Download and install - The Go Programming Language](https://golang.google.cn/doc/install)
+golang 安装：[Download and install - The Go Programming Language](https://golang.google.cn/doc/install)
 
-WSL环境使用Goland开发：[使用 WSL 环境在 Goland 中开发 Go 项目 - 掘金](https://juejin.cn/post/7102970555401240607)
+WSL 环境使用 Goland 开发：[使用 WSL 环境在 Goland 中开发 Go 项目 - 掘金](https://juejin.cn/post/7102970555401240607)

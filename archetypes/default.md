@@ -16,6 +16,9 @@ categories: []
 featuredImage: "featured-image.png"
 featuredImagePreview: "featured-image.png"
 
+outdatedInfoWarning: true
+
+
 ---
 
 <!--more-->

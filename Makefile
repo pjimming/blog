@@ -14,3 +14,6 @@ deploy:
 
 featured:
 	@wget $(url) -O content/posts/$(title)/featured-image.png
+
+submodule:
+	@git submodule update --recursive --remote
