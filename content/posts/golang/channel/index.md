@@ -17,7 +17,7 @@ featuredImage: "featured-image.png"
 featuredImagePreview: "featured-image.png"
 ---
 
-channel 管道提供了一种机制，它是一种类型，类似于队列或管道，可以用于在 goroutine 之间传递数据。此外，channel 是**并发安全**的。
+介绍 Golang 中的 channel 是什么，如何使用以及一些 channel 的使用例子
 
 <!--more-->
 
