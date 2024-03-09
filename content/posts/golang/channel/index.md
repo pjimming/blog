@@ -1,5 +1,5 @@
 ---
-title: "Golang的二三事--channel篇"
+title: "深入理解Go语言的Channel"
 subtitle: ""
 date: 2024-03-08T20:50:19+08:00
 lastmod: 2024-03-08T20:50:19+08:00
@@ -17,7 +17,7 @@ featuredImage: "featured-image.png"
 featuredImagePreview: "featured-image.png"
 ---
 
-深入理解 Golang 中的 channel
+channel 管道提供了一种机制，它是一种类型，类似于队列或管道，可以用于在 goroutine 之间传递数据。此外，channel 是**并发安全**的。
 
 <!--more-->
 
