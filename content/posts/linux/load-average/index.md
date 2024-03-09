@@ -10,27 +10,28 @@ description: ""
 license: ""
 images: []
 
-tags: [linux,运维]
+tags: [linux, 运维, 操作系统]
 categories: [linux]
 
 featuredImage: "featured-image.png"
 featuredImagePreview: "featured-image.png"
-
 ---
-介绍Linux中平均负载的相关概念
+
+介绍 Linux 中平均负载的相关概念
 
 <!--more-->
 
 ---
 
-## 什么是Load Average
-系统负载（System Load）是系统CPU繁忙程度的度量，即有多少进程在等待被CPU调度（进程等待队列的长度）。
+## 什么是 Load Average
 
-平均负载（Load Average）是一段时间内系统的平均负载，这个一段时间一般取1分钟、5分钟、15分钟。
+系统负载（System Load）是系统 CPU 繁忙程度的度量，即有多少进程在等待被 CPU 调度（进程等待队列的长度）。
 
-即，Linux系统对当前CPU工作量的度量。
+平均负载（Load Average）是一段时间内系统的平均负载，这个一段时间一般取 1 分钟、5 分钟、15 分钟。
 
-## 如何查看Load Average
+即，Linux 系统对当前 CPU 工作量的度量。
+
+## 如何查看 Load Average
 
 `uptime`、`top`、`w`皆可查看系统负载。
 
@@ -71,13 +72,14 @@ MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   6549.0 avail Mem
 19298 root      20   0    2484    112      0 S   0.0   0.0   0:00.00 SessionLeader
 19299 root      20   0    2500    124      0 S   0.0   0.0   0:00.54 Relay(19300)
 19300 pjm       20   0  601480  52768  37308 S   0.0   0.7   0:02.34 node
-➜  ~  
+➜  ~
 ```
 
 ## Load Average 值的含义
+
 ### 1. 单核处理器
 
-假设我们的系统是单CPU单内核的，把它比喻成是一条单向马路，把CPU任务比作汽车。
+假设我们的系统是单 CPU 单内核的，把它比喻成是一条单向马路，把 CPU 任务比作汽车。
 
 - 当车不多的时候，load < 1；
 - 当车占满整个马路的时候 load = 1；
@@ -85,28 +87,38 @@ MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   6549.0 avail Mem
 
 ### 2. 多核处理器
 
-我们经常会发现服务器Load > 1但是运行仍然不错，那是因为服务器是多核处理器(Multi-core)。
+我们经常会发现服务器 Load > 1 但是运行仍然不错，那是因为服务器是多核处理器(Multi-core)。
 
-假设我们服务器CPU是2核，那么将意味我们拥有2条马路，我们的Load = 2时，所有马路都跑满车辆。
+假设我们服务器 CPU 是 2 核，那么将意味我们拥有 2 条马路，我们的 Load = 2 时，所有马路都跑满车辆。
 
-注：查看cpu 核数命令： 
+注：查看 cpu 核数命令：
+
 ```bash
 ➜  ~ grep 'model name' /proc/cpuinfo | wc -l
 16
 ```
 
 ## 对于不同 Load Average 值，哪些值得警惕？(单核)
+
 - **Load < 0.7**：系统很闲，马路上没什么车，要考虑多部署一些服务
 - **0.7 < Load < 1**：系统状态不错，马路可以轻松应对
 - **Load == 1**：系统马上要处理不多来了，赶紧找一下原因
 - **Load > 1**：马路已经非常繁忙了，进入马路的每辆汽车都要无法很快的运行
 
 ## 三种 Load Average 情况分析（单核）
-##### 1分钟Load>1，5分钟Load<1，15分钟Load<1
+
+##### 1 分钟 Load>1，5 分钟 Load<1，15 分钟 Load<1
+
 短期内繁忙，中长期空闲，初步判断是一个“抖动”，或者是“拥塞前兆”
-##### 1分钟Load>1，5分钟Load>1，15分钟Load<1
+
+##### 1 分钟 Load>1，5 分钟 Load>1，15 分钟 Load<1
+
 短期内繁忙，中期内紧张，很可能是一个“拥塞的开始”
-##### 1分钟Load>1，5分钟Load>1，15分钟Load>1
+
+##### 1 分钟 Load>1，5 分钟 Load>1，15 分钟 Load>1
+
 短、中、长期都繁忙，系统“正在拥塞”
-##### 1分钟Load<1，5分钟Load>1，15分钟Load>1
+
+##### 1 分钟 Load<1，5 分钟 Load>1，15 分钟 Load>1
+
 短期内空闲，中、长期繁忙，不用紧张，系统“拥塞正在好转”
