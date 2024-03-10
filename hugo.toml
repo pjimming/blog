@@ -1,4 +1,4 @@
-baseURL = "http://example.org/"
+baseURL = "https://blog.pjmcode.top/"
 
 # 更改使用 Hugo 构建网站时使用的默认主题
 theme = "LoveIt"
@@ -45,7 +45,7 @@ name = "潘江明"
 identifier = "posts"
 weight = 1
 # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
-pre = ""
+pre = "<i class='fa-solid fa-box-archive'></i>"
 # 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
 name = "所有文章"
 post = ""
@@ -56,7 +56,7 @@ title = ""
 identifier = "tags"
 name = "标签"
 post = ""
-pre = ""
+pre = "<i class='fa-solid fa-tag'></i>"
 title = ""
 url = "/tags/"
 weight = 2
@@ -64,7 +64,7 @@ weight = 2
 identifier = "categories"
 name = "分类"
 post = ""
-pre = ""
+pre = "<i class='fa-solid fa-table-list'></i>"
 title = ""
 url = "/categories/"
 weight = 3
@@ -72,7 +72,7 @@ weight = 3
 identifier = "about"
 name = "关于"
 post = ""
-pre = ""
+pre = "<i class='fa-regular fa-address-card'></i>"
 title = ""
 url = "/about/"
 weight = 4
@@ -80,7 +80,7 @@ weight = 4
 identifier = "friend"
 name = "友链"
 post = ""
-pre = ""
+pre = "<i class='fa-solid fa-user-group'></i>"
 title = ""
 url = "/friend/"
 weight = 5
@@ -231,7 +231,7 @@ enable = true
 hint = 90     # Display hint if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示提醒
 warn = 180    # Display warning if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示警告
 before = "这篇文章最后修改于"
-after = "，请注意时效性"
+after = "，请鉴别其时效性，以免造成不必要的麻烦。"
 
 
 # 作者的社交信息设置

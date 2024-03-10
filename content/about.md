@@ -37,6 +37,8 @@ Hugo 主题：[LoveIt](https://github.com/dillonzq/LoveIt)
 发布平台：[Netlify](https://www.netlify.com/)
 
 评论系统：[Giscus](https://github.com/giscus/giscus)
+
+图床工具：[PicX](https://github.com/XPoet/picx)
 {{< /admonition >}}
 
 ## 关于我
