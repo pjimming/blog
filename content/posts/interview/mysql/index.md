@@ -13,8 +13,8 @@ images: []
 tags: [inerview, mysql]
 categories: [interview]
 
-featuredImage: "https://github.com/pjimming/picx-images-hosting/raw/master/image.4qr2l18ab2.webp"
-featuredImagePreview: "https://github.com/pjimming/picx-images-hosting/raw/master/image.4qr2l18ab2.webp"
+featuredImage: "https://pjimming.github.io/picx-images-hosting/image.4qr2l18ab2.webp"
+featuredImagePreview: "https://pjimming.github.io/picx-images-hosting/image.4qr2l18ab2.webp"
 
 outdatedInfoWarning: true
 ---
