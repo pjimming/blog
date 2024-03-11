@@ -4,7 +4,8 @@
 
 /* 标题 */
 .page.single h2 {
-  box-shadow: rgb(95, 90, 75) 0px 0px 0px 1px, rgba(10, 10, 0, 0.5) 1px 1px 6px 1px;
+  box-shadow: rgb(95, 90, 75) 0px 0px 0px 1px,
+    rgba(10, 10, 0, 0.5) 1px 1px 6px 1px;
   color: rgb(255, 255, 255);
   font-family: 微软雅黑, 宋体, 黑体, Arial;
   font-weight: bold;
@@ -22,29 +23,38 @@
 
 /* 行内代码块 */
 code {
-  margin: 0 .2rem;
-  font-size: .9em;
+  margin: 0 0.2rem;
+  font-size: 0.9em;
   border: 1px solid #d6d6d6;
-  border-radius: .2rem;
+  border-radius: 0.2rem;
 }
 
 /* 预格式代码块(用tab键插入的代码块) */
 pre code {
   margin: 0;
   border: none;
-  font-size: .875rem;
+  font-size: 0.875rem;
 }
 
 /* 标题里的代码块样式 */
-.page.single .content>h2 code {
+.page.single .content > h2 code {
   color: #f7ab01;
   background: transparent !important;
   border: none;
 }
 
-
 /* 分隔线 */
 hr {
   border: none;
   border-bottom: 2px dashed #7a7a7a !important;
+}
+
+/* 图片 */
+figcaption {
+  display: none !important;
+}
+
+img[data-sizes="”auto”"] {
+  display: block;
+  width: 50%;
 }
