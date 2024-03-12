@@ -15,13 +15,13 @@ categories: [docker]
 
 featuredImage: "featured-image.png"
 featuredImagePreview: "featured-image.png"
-
 ---
-通过使用Go实现简易Docker Conatiner
+
+通过使用 Go 实现简易 Docker Conatiner
+
 <!--more-->
 
 ---
-
 
 开发中使用到的第三方包：
 
@@ -32,11 +32,11 @@ go get github.com/sirupsen/logrus
 
 ## Linux proc 文件系统
 
-​`/proc` ​文件系统由内核提供，包含系统运行时的信息，只存在与内存中。
+​`/proc` ​ 文件系统由内核提供，包含系统运行时的信息，只存在与内存中。
 
 ## 实现 run 命令
 
-​`syscall.Exec` ​是最为重要的一句黑魔法，正是这个系统调用实现了完成初始化动作并将用户进程运行起来的操作。
+​`syscall.Exec` ​ 是最为重要的一句黑魔法，正是这个系统调用实现了完成初始化动作并将用户进程运行起来的操作。
 
 首先，使用 Docker 创建起来一个容器之后，会发现容器内的第一个程序，也就是 PID 为 1 的那个进程，是指定的前台进程。但是，我们知道容器创建之后，执行的第一个进程并不是用户的进程，而是 init 初始化的进程。 这时候，如果通过 ps 命令查看就会发现，容器内第一个进程变成了自己的 init,这和预想的是不一样的。
 
@@ -44,18 +44,18 @@ go get github.com/sirupsen/logrus
 
 这里 execve 系统调用就是用来做这件事情的。
 
-syscall.Exec 这个方法，其实最终调用了 Kernel 的 `int execve(const char *filename, char *const argv[], char *const envp[]);` ​这个系统函数。**它的作用是执行当前 filename 对应的程序,它会覆盖当前进程的镜像、数据和堆栈等信息，包括 PID，这些都会被将要运行的进程覆盖掉**。
+syscall.Exec 这个方法，其实最终调用了 Kernel 的 `int execve(const char *filename, char *const argv[], char *const envp[]);` ​ 这个系统函数。**它的作用是执行当前 filename 对应的程序,它会覆盖当前进程的镜像、数据和堆栈等信息，包括 PID，这些都会被将要运行的进程覆盖掉**。
 
 也就是说，调用这个方法，将用户指定的进程运行起来，把最初的 init 进程给替换掉，这样当进入到容器内部的时候，就会发现容器内的第一个程序就是我们指定的进程了。
 
 > 这其实也是目前 Docker 使用的容器引擎 runC 的实现方式之一。
 
 ```shell
-➜  my-docker git:(ch3) ✗ go build .   
+➜  my-docker git:(ch3) ✗ go build .
 ➜  my-docker git:(ch3) ✗ ls
 README.md  container  docs  go.mod  go.sum  main.go  main_command.go  mydocker  run.go  test
 ➜  my-docker git:(ch3) ✗ sudo ./mydocker run -it /bin/sh
-[sudo] password for pjm: 
+[sudo] password for pjm:
 {"level":"info","msg":"[initCommand] init comeon","time":"2024-02-16T22:11:03+08:00"}
 {"level":"info","msg":"[initCommand] init command /bin/sh","time":"2024-02-16T22:11:03+08:00"}
 {"level":"info","msg":"command /bin/sh","time":"2024-02-16T22:11:03+08:00"}
@@ -71,7 +71,7 @@ README.md  container  docs  go.mod  go.sum  main.go  main_command.go  mydocker  
 
 ### 小结
 
-*  **/proc/self/exe**：调用自身 init 命令，初始化容器环境
+- **/proc/self/exe**：调用自身 init 命令，初始化容器环境
 
 ​`/proc/self/exe`​ 是 Linux 系统中的一个符号链接，**它指向当前进程的可执行文件**。
 
@@ -83,15 +83,15 @@ README.md  container  docs  go.mod  go.sum  main.go  main_command.go  mydocker  
 
 也就是说在 mydocker run 命令中执行的 /proc/self/exe init 实际上最终执行的是 mydocker init，即 run 命令会调用 init 命令来初始化容器环境。
 
-* **tty**：实现交互
+- **tty**：实现交互
 
 当用户指定 -it 参数时，就将 cmd 的输入和输出连接到终端，以便我们可以与命令进行交互，并看到命令的输出。
 
-* **Namespace 隔离**：通过在 fork 时指定对应 Cloneflags 来实现创建新 Namespace
+- **Namespace 隔离**：通过在 fork 时指定对应 Cloneflags 来实现创建新 Namespace
 
 fork 新进程时，通过指定 Cloneflags 会创建对应的 Namespace 以实现隔离，这里包括 UTS（主机名）、PID（进程 ID）、挂载点、网络、IPC 等方面的隔离。
 
-* **proc 隔离**：通过重新 mount /proc 文件系统来实现进程信息隔离
+- **proc 隔离**：通过重新 mount /proc 文件系统来实现进程信息隔离
 
 /proc 文件系统是一个虚拟的文件系统，提供了对内核和运行中进程的信息的访问。通过挂载 /proc，系统中的许多信息和控制接口可以通过文件的形式在这个目录下找到。
 
@@ -125,7 +125,7 @@ _ = syscall.Mount("proc", "/proc", "proc", uintptr(defaultMountFlags), "")
 
 > 这也就是为什么在容器中执行 ps 命令只能看到容器中的进程信息
 
-* **execve 系统调用**：使用指定进程覆盖 init 进程
+- **execve 系统调用**：使用指定进程覆盖 init 进程
 
 **execve 系统调用用于取代当前进程的映像（即，当前进程的可执行文件），并用一个新的程序来替代**。
 
@@ -135,9 +135,9 @@ _ = syscall.Mount("proc", "/proc", "proc", uintptr(defaultMountFlags), "")
 int execve(const char *filename, char *const argv[], char *const envp[);
 ```
 
-* ​`filename`​ 参数指定了要执行的新程序的文件路径。
-* ​`argv`​ 参数是一个字符串数组，包含了新程序的命令行参数。数组的第一个元素通常是新程序的名称，随后的元素是命令行参数。
-* ​`envp`​ 参数是一个字符串数组，包含了新程序执行时使用的环境变量。
+- ​`filename`​ 参数指定了要执行的新程序的文件路径。
+- ​`argv`​ 参数是一个字符串数组，包含了新程序的命令行参数。数组的第一个元素通常是新程序的名称，随后的元素是命令行参数。
+- ​`envp`​ 参数是一个字符串数组，包含了新程序执行时使用的环境变量。
 
 execve 的工作方式是加载指定的程序文件，并将它替代当前进程的内存映像。因此，执行 execve 后，原进程的代码、数据等内容都会被新程序的内容替代。
 
@@ -151,16 +151,16 @@ execve 的工作方式是加载指定的程序文件，并将它替代当前进�
 
 ### 运行流程
 
-​![image](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240217011047-sysrv4i.png)​
+​![](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240217011047-sysrv4i.png)​
 
-* 1）流程开始，用户手动执行 mydocker run 命令
-* 2）urfave/cli 工具解析传递过来的参数
-* 3）解析完成后发现第一个参数是 run，于是执行 run 命令，调用 runCommand 方法，该方法中继续调用 NewParentProcess 函数构建一个 cmd 对象
-* 4）NewParentProcess 将构建好的 cmd 对象返回给 runCommand 方法
-* 5）runCommand 方法中调用 cmd.exec 执行上一步构建好的 cmd 对象
-* 6）容器启动后，根据 cmd 中传递的参数，/proc/self/exe init 实则最终会执行 mydocker init 命令，初始化容器环境
-* 7）init 命令内部实现就是通过 mount 命令挂载 proc 文件系统
-* 8）容器创建完成，整个流程结束
+- 1）流程开始，用户手动执行 mydocker run 命令
+- 2）urfave/cli 工具解析传递过来的参数
+- 3）解析完成后发现第一个参数是 run，于是执行 run 命令，调用 runCommand 方法，该方法中继续调用 NewParentProcess 函数构建一个 cmd 对象
+- 4）NewParentProcess 将构建好的 cmd 对象返回给 runCommand 方法
+- 5）runCommand 方法中调用 cmd.exec 执行上一步构建好的 cmd 对象
+- 6）容器启动后，根据 cmd 中传递的参数，/proc/self/exe init 实则最终会执行 mydocker init 命令，初始化容器环境
+- 7）init 命令内部实现就是通过 mount 命令挂载 proc 文件系统
+- 8）容器创建完成，整个流程结束
 
 ## 优化: 使用匿名管道传递参数
 
@@ -174,10 +174,10 @@ execve 的工作方式是加载指定的程序文件，并将它替代当前进�
 
 有以下特点：
 
-* 管道有一个固定大小的缓冲区，一般是4KB。
-* 这种通道是单向的，即数据只能在一个方向上流动。
-* 当管道被写满时，写进程就会被阻塞，直到有读进程把管道的内容读出来。
-* 同样地，当读进程从管道内拿数据的时候，如果这时管道的内容是空的，那么读进程同样会被阻塞，一直等到有写进程向管道内写数据。
+- 管道有一个固定大小的缓冲区，一般是 4KB。
+- 这种通道是单向的，即数据只能在一个方向上流动。
+- 当管道被写满时，写进程就会被阻塞，直到有读进程把管道的内容读出来。
+- 同样地，当读进程从管道内拿数据的时候，如果这时管道的内容是空的，那么读进程同样会被阻塞，一直等到有写进程向管道内写数据。
 
 因此，匿名管道在进程间通信中很有用，可以使一个进程的输出成为另一个进程的输入，从而实现进程之间的数据传递。
 
@@ -195,9 +195,9 @@ execve 的工作方式是加载指定的程序文件，并将它替代当前进�
 
 #### FD 传递
 
-首先在父进程里创建一个匿名管道,父进程就可以拿到writepipe的fd.
+首先在父进程里创建一个匿名管道,父进程就可以拿到 writepipe 的 fd.
 
-现在需要将readpipe fd告知子进程,**将 readPipe 作为 ExtraFiles，这样 cmd 执行时就会外带着这个文件句柄去创建子进程**。
+现在需要将 readpipe fd 告知子进程,**将 readPipe 作为 ExtraFiles，这样 cmd 执行时就会外带着这个文件句柄去创建子进程**。
 
 #### 数据读写
 
@@ -221,29 +221,29 @@ execve 的工作方式是加载指定的程序文件，并将它替代当前进�
 
 子进程这边就麻烦一点，包含以下两步：
 
-* 1）获取 readPipe FD
-* 2）读取数据
+- 1）获取 readPipe FD
+- 2）读取数据
 
 子进程启动后，首先要找到前面通过`ExtraFiles`​ 传递过来的 readPipe FD，然后才是数据读取，
 
-子进程 fork 出来后，执行到`readUserCommand`​函数就会开始读取参数，此时如果父进程还没有开始发送参数，根据管道的特性，子进程会阻塞在这里，一直到父进程发送数据过来后子进程才继续执行下去。
+子进程 fork 出来后，执行到`readUserCommand`​ 函数就会开始读取参数，此时如果父进程还没有开始发送参数，根据管道的特性，子进程会阻塞在这里，一直到父进程发送数据过来后子进程才继续执行下去。
 
-​![image](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240217211600-z16iytf.png)​
+​![](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240217211600-z16iytf.png)​
 
-* 父进程创建匿名管道，得到 readPiep FD 和 writePipe FD；
-* 父进程中构造 cmd 对象时通过`ExtraFiles`​ 将 readPiep FD 传递给子进程
-* 父进程启动子进程后将命令通过 writePipe FD 写入子进程
-* 子进程中根据 index 拿到对应的 readPipe FD
-* 子进程中 readPipe FD 中读取命令并执行
+- 父进程创建匿名管道，得到 readPiep FD 和 writePipe FD；
+- 父进程中构造 cmd 对象时通过`ExtraFiles`​ 将 readPiep FD 传递给子进程
+- 父进程启动子进程后将命令通过 writePipe FD 写入子进程
+- 子进程中根据 index 拿到对应的 readPipe FD
+- 子进程中 readPipe FD 中读取命令并执行
 
 ## 增加容器资源限制
 
-* mydocker run 命令增加对应 flag
-* 实现统一 CgroupsManager
-* 实现各个 Subsystem
-* 容器创建、停止时调用对应方法配置 cgroup
+- mydocker run 命令增加对应 flag
+- 实现统一 CgroupsManager
+- 实现各个 Subsystem
+- 容器创建、停止时调用对应方法配置 cgroup
 
-​![image](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240221215621-qr780n4.png)​
+​![](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240221215621-qr780n4.png)​
 
 ## 遇到的问题
 
@@ -253,13 +253,13 @@ execve 的工作方式是加载指定的程序文件，并将它替代当前进�
 
 ```shell
 ➜  my-docker git:(ch3) sudo ./mydocker run -it /bin/ls
-[sudo] password for pjm: 
+[sudo] password for pjm:
 {"level":"info","msg":"[initCommand] init comeon","time":"2024-02-16T22:24:59+08:00"}
 {"level":"info","msg":"[initCommand] init command /bin/ls","time":"2024-02-16T22:24:59+08:00"}
 {"level":"info","msg":"command /bin/ls","time":"2024-02-16T22:24:59+08:00"}
 README.md  container  docs  go.mod  go.sum  main.go  main_command.go  mydocker  run.go  test
 ➜  my-docker git:(ch3) sudo ./mydocker run -it /bin/ls
-[sudo] password for pjm: 
+[sudo] password for pjm:
 {"level":"error","msg":"run fail, fork/exec /proc/self/exe: no such file or directory","time":"2024-02-16T22:25:06+08:00"}
 ➜  my-docker git:(ch3)
 ```

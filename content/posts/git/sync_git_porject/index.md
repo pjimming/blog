@@ -29,11 +29,11 @@ featuredImagePreview: "featured-image.png"
 
    打开[GitHub Token New](https://github.com/settings/tokens/new)页面，勾选`repo`​ 选项，如下图所示
 
-   ​![image](assets/image-20240229114924-mh919b2.png)​
+   ​![](assets/image-20240229114924-mh919b2.png)​
 
    拉至页面最下面，生成 Token，最后复制该 Token，保存好
 
-   ​![image](assets/image-20240229115142-4x342qb.png)​
+   ​![](assets/image-20240229115142-4x342qb.png)​
 
 2. 切换分支
 

@@ -15,22 +15,23 @@ categories: [docker]
 
 featuredImage: "featured-image.png"
 featuredImagePreview: "featured-image.png"
-
 ---
-使用Go实现容器的进阶操作
+
+使用 Go 实现容器的进阶操作
+
 <!--more-->
 
 ---
 
 ## 实现容器后台运行
 
-在 Docker 早期版本，所有的容器 init 进程都是从 docker daemon 这个进程 fork出来的，这也就会导致一个众所周知的问题，如果 docker daemon 挂掉，那么所有的容器都会宕掉，这给升级 docker daemon 带来很大的风险。
+在 Docker 早期版本，所有的容器 init 进程都是从 docker daemon 这个进程 fork 出来的，这也就会导致一个众所周知的问题，如果 docker daemon 挂掉，那么所有的容器都会宕掉，这给升级 docker daemon 带来很大的风险。
 
-后来，Docker 使用了 containerd， 也就是现在的runC，便可以实现即使 daemon挂掉，容器依然健在的功能了，其结构如下图所示。
+后来，Docker 使用了 containerd， 也就是现在的 runC，便可以实现即使 daemon 挂掉，容器依然健在的功能了，其结构如下图所示。
 
-​![image](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240225203041-7qovsel.png)​
+​![](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240225203041-7qovsel.png)​
 
-我们并不想去实现一个 daemon,因为这和容器的关联不是特别大，而且，查看Docker 的运行引擎 runC 可以发现，runC 也提供一.种 detach 功能，可以保证在runC 退出的情况下容器依然可以运行。因此，我们将会使用 detach 功能去实现创建完成容器后，mydocker 就会退出,但是容器依然继续运行的功能。
+我们并不想去实现一个 daemon,因为这和容器的关联不是特别大，而且，查看 Docker 的运行引擎 runC 可以发现，runC 也提供一.种 detach 功能，可以保证在 runC 退出的情况下容器依然可以运行。因此，我们将会使用 detach 功能去实现创建完成容器后，mydocker 就会退出,但是容器依然继续运行的功能。
 
 容器，在操作系统看来，其实就是一个进程。当前运行命令的 mydocker 是主进程，容器是被当前 mydocker 进程 fork 出来的子进程。子进程的结束和父进程的运行是一个异步的过程，即父进程永远不知道子进程到底什么时候结束。如果创建子进程的父进程退出，那么这个子进程就成了没人管的孩子，俗称孤儿进程。为了避免孤儿进程退出时无法释放所占用的资源而僵死，进程号为 1 的 init 进程就会接受这些孤儿进程。
 
@@ -38,27 +39,27 @@ featuredImagePreview: "featured-image.png"
 
 ## 实现查看存在的容器
 
-### 记录容器的info
+### 记录容器的 info
 
-​![image](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240225203146-gkgessx.png)​
+​![](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240225203146-gkgessx.png)​
 
-### ps命令执行流程
+### ps 命令执行流程
 
-​![image](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240225203209-xcezn94.png)​
+​![](https://raw.githubusercontent.com/pjimming/mydocker/main/docs/assets/image-20240225203209-xcezn94.png)​
 
 ## 实现查看容器的日志
 
 一般来说，对于容器中运行的进程，使日志达到标准输出是一个非常好的实现方案，因此需要将容器中的标准输出保存下来，以便需要的时候访问。
 
-我们就以此作为思路来实现 mydocker logs 命令。 我们会将容器进程的标准输出挂载到`/var/run/mydocker/容器名/container.log"`​文件中，这样就可以在调用 mydocker logs 的时候去读取这个文件，并将进程内的标准输出打印出来。
+我们就以此作为思路来实现 mydocker logs 命令。 我们会将容器进程的标准输出挂载到`/var/run/mydocker/容器名/container.log"`​ 文件中，这样就可以在调用 mydocker logs 的时候去读取这个文件，并将进程内的标准输出打印出来。
 
 ## 实现进入容器
 
 ### setns
 
-加入对应的 Namespace 很简单，Linux提供了 [setns](https://man7.org/linux/man-pages/man2/setns.2.html) 系统调用给我们使用。
+加入对应的 Namespace 很简单，Linux 提供了 [setns](https://man7.org/linux/man-pages/man2/setns.2.html) 系统调用给我们使用。
 
-setns 是一个系统调用，可以根据提供的 PID 再次进入到指定的 Namespace中。它需要先打开`/proc/[pid/ns/`​文件夹下对应的文件，然后使当前进程进入到指定的 Namespace 中。
+setns 是一个系统调用，可以根据提供的 PID 再次进入到指定的 Namespace 中。它需要先打开`/proc/[pid/ns/`​ 文件夹下对应的文件，然后使当前进程进入到指定的 Namespace 中。
 
 但是用 Go 来实现则存在一个致命问题：**setns 调用需要单线程上下文，而 GoRuntime 是多线程的**。
 
@@ -74,7 +75,7 @@ setns 是一个系统调用，可以根据提供的 PID 再次进入到指定的
 
 Cgo 是一个很炫酷的功能，允许 Go 程序去调用 C 的函数与标准库。你只需要以一种特殊的方式在 Go 的源代码里写出需要调用的 C 的代码，Cgo 就可以把你的 C 源码文件和 Go 文件整合成一个包。
 
-下面举一个最简单的例子，在这个例子中有两个函数一Random 和 Seed,在 它们里面调用了 C 的 random 和 srandom 函数。
+下面举一个最简单的例子，在这个例子中有两个函数一 Random 和 Seed,在 它们里面调用了 C 的 random 和 srandom 函数。
 
 ```go
 package nsenter
@@ -167,24 +168,25 @@ import (
 
 所以，本节要实现如下两个目的。
 
-* 1）为每个容器分配单独的隔离文件系统。
-* 2）修改 mydocker commit 命令，实现对不同容器进行打包镜像的功能。
-* 3）修改 mydocker rm 命令，删除容器时顺带删除文件系统
+- 1）为每个容器分配单独的隔离文件系统。
+- 2）修改 mydocker commit 命令，实现对不同容器进行打包镜像的功能。
+- 3）修改 mydocker rm 命令，删除容器时顺带删除文件系统
 
 ### 实现隔离文件系统
 
 改动点：
 
-* 1）runCommand 命令中添加 imageName 作为第一个参数输入
+- 1）runCommand 命令中添加 imageName 作为第一个参数输入
 
-  * 相关方法都要增加相关参数
-  * containerInfo 增加对应字段
-* 2）rootfs 相关目录定义成变量，不在固定写死。
-* 3）文件系统相关操作抽取出来，单独放到 volume.go 文件中
+  - 相关方法都要增加相关参数
+  - containerInfo 增加对应字段
+
+- 2）rootfs 相关目录定义成变量，不在固定写死。
+- 3）文件系统相关操作抽取出来，单独放到 volume.go 文件中
 
 ## 实现指定环境变量运行
 
-exec 命令其实是 mydocker 发起 的另外一个进程，这个进程的父进程其实是宿主机的，并不是容器内的。因为在Cgo里面使用了 setns 系统调用，才使得这个进程进入到了容器内的命名空间，但是由于环境变量是继承自父进程的，因此**这个 exec 进程的环境变量其实是继承自宿主机的，所以在 exec 进程内看到的环境变量其实是宿主机的环境变量**。
+exec 命令其实是 mydocker 发起 的另外一个进程，这个进程的父进程其实是宿主机的，并不是容器内的。因为在 Cgo 里面使用了 setns 系统调用，才使得这个进程进入到了容器内的命名空间，但是由于环境变量是继承自父进程的，因此**这个 exec 进程的环境变量其实是继承自宿主机的，所以在 exec 进程内看到的环境变量其实是宿主机的环境变量**。
 
 但是，只要是容器内 PID 为 1 的进程，创建出来的进程都会继承它的环境变量。下面修改 exec 命令来直接使用 env 命令查看容器内环境变量的功能。
 
@@ -192,7 +194,7 @@ exec 命令其实是 mydocker 发起 的另外一个进程，这个进程的父�
 
 本章实现了容器操作的基本功能。
 
-* 首先实现了容器的后台运行，然后将容器的状态在文件系统上做了存储。
-* 通过这些存储信息，又可以实现列出当前容器信息的功能。
-* 并且， 基于后台运行的容器，我们可以去手动停止容器，并清除掉容器的存储信息。
-* 最后修改了上一章镜像的存储结构，使得多个容器可以并存，且存储的内容互不干扰。
+- 首先实现了容器的后台运行，然后将容器的状态在文件系统上做了存储。
+- 通过这些存储信息，又可以实现列出当前容器信息的功能。
+- 并且， 基于后台运行的容器，我们可以去手动停止容器，并清除掉容器的存储信息。
+- 最后修改了上一章镜像的存储结构，使得多个容器可以并存，且存储的内容互不干扰。

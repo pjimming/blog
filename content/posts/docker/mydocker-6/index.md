@@ -15,13 +15,13 @@ categories: [docker]
 
 featuredImage: "featured-image.png"
 featuredImagePreview: "featured-image.png"
-
 ---
-介绍容器相关的虚拟网络，如veth、bridge、路由表、iptables
+
+介绍容器相关的虚拟网络，如 veth、bridge、路由表、iptables
+
 <!--more-->
 
 ---
-
 
 ## 1. Linux 虚拟网络设备
 
@@ -37,11 +37,11 @@ featuredImagePreview: "featured-image.png"
 
 #### 网络命名空间
 
-为了支持网络协议栈的多个实例，Linux在网络栈中引入了网络命名空间。这些独立的协议栈被隔离到不同的命名空间中。
+为了支持网络协议栈的多个实例，Linux 在网络栈中引入了网络命名空间。这些独立的协议栈被隔离到不同的命名空间中。
 
 处理不同网络命令空间中的通信
 
-​![image](assets/image-20240302151857-sgh7la1.png)​
+​![](assets/image-20240302151857-sgh7la1.png)​
 
 #### Demo
 
@@ -56,7 +56,7 @@ netns1
 root@pjm2001:~#
 ```
 
-创建两个Veth设备对(`ip link add <veth name> type veth peer name <peer>`​)
+创建两个 Veth 设备对(`ip link add <veth name> type veth peer name <peer>`​)
 
 ```shell
 root@pjm2001:~# ip link add veth0 type veth peer name veth1
@@ -91,7 +91,7 @@ root@pjm2001:~# ip netns exec netns1 ip link show
 root@pjm2001:~#
 ```
 
-至此，两个不同的命名空间各自有一个Veth，不过还不能通信，因为我们还没给它们分配IP
+至此，两个不同的命名空间各自有一个 Veth，不过还不能通信，因为我们还没给它们分配 IP
 
 ```shell
 root@pjm2001:~# ip netns exec netns1 ip addr add 10.1.1.1/24 dev veth1
@@ -122,15 +122,15 @@ rtt min/avg/max/mdev = 0.051/0.090/0.166/0.053 ms
 root@pjm2001:~#
 ```
 
-至此，Veth设备对的基本原理和用法演示结束。
+至此，Veth 设备对的基本原理和用法演示结束。
 
-> Docker 内部，Veth设备对也是连通容器与宿主机的主要网络设备。
+> Docker 内部，Veth 设备对也是连通容器与宿主机的主要网络设备。
 
 #### 查看对端设备
 
 由于 Veth 设备对被移动到另一个命名空间后在当前命名空间中就看不到了。
 
-那么该如何知道这个Veth设备的另一端在哪儿呢？
+那么该如何知道这个 Veth 设备的另一端在哪儿呢？
 
 可以使用 ethtool 工具来查看：
 
@@ -152,7 +152,7 @@ root@pjm2001:~#
 
 peer_ifindex 就是另一端的接口设备的序列号，这里是 4。
 
-然后在到默认命名空间取看 序列化4代表的是什么设备：
+然后在到默认命名空间取看 序列化 4 代表的是什么设备：
 
 ```shell
 root@pjm2001:~# ip link | grep ^4
@@ -160,7 +160,7 @@ root@pjm2001:~# ip link | grep ^4
 root@pjm2001:~#
 ```
 
-可以看到 序列号4的设备就是 veth0，它的另一端就是 netns1 中的 veth1，它们互为 peer。
+可以看到 序列号 4 的设备就是 veth0，它的另一端就是 netns1 中的 veth1，它们互为 peer。
 
 ### Linux Bridge
 
@@ -189,15 +189,15 @@ br0             8000.00155dc42104       no              eth0
 root@pjm2001:~#
 ```
 
-[linux bridge实践](https://zhuanlan.zhihu.com/p/339070912)
+[linux bridge 实践](https://zhuanlan.zhihu.com/p/339070912)
 
-​![image](assets/image-20240302152531-ndnh3f2.png)​
+​![](assets/image-20240302152531-ndnh3f2.png)​
 
 ## 2. Linux 路由表
 
-路由表是 Linux 内核的一个模块，通过定义路由表来决定在某个网络Namespace 中包的流向，从而定义请求会到哪个网络设备上。
+路由表是 Linux 内核的一个模块，通过定义路由表来决定在某个网络 Namespace 中包的流向，从而定义请求会到哪个网络设备上。
 
-​![image](assets/image-20240302153313-sjvuy7l.png)​
+​![](assets/image-20240302153313-sjvuy7l.png)​
 
 继续以上面的例子演示
 
@@ -219,7 +219,7 @@ root@pjm2001:~# route add -net 172.18.0.0/24 dev br0
 root@pjm2001:~#
 ```
 
-通过设置路由，对IP地址的请求就能正确被路由到对应的网络设备上，从而实现通信，如下：
+通过设置路由，对 IP 地址的请求就能正确被路由到对应的网络设备上，从而实现通信，如下：
 
 ```shell
 # 查看宿主机的IP地址
@@ -257,7 +257,7 @@ rtt min/avg/max/mdev = 0.050/0.050/0.050/0.000 ms
 root@pjm2001:~#
 ```
 
-到此就实现了通过网桥连接不同Namespace网络了。
+到此就实现了通过网桥连接不同 Namespace 网络了。
 
 ## 3. Linux iptables
 
@@ -269,7 +269,7 @@ iptables 是对 Linux 内核的 netfilter 模块进行操作和展示的工具�
 
 iptables 中的 MASQUERADE 策略可以将请求包中的源地址转换成一个网络设备的地址。
 
-比如上述例子中的那个 Namespace 中网络设备的地址是 172.18.0.2, 这个地址虽然在宿主机上可以路由到 br0 网桥，但是到达宿主机外部之后，是不知道如何路由到这个 IP 地址的，所以如果要请求外部地址的话，需要先通过MASQUERADE 策略将这个 IP 转换成宿主机出口网卡的 IP。
+比如上述例子中的那个 Namespace 中网络设备的地址是 172.18.0.2, 这个地址虽然在宿主机上可以路由到 br0 网桥，但是到达宿主机外部之后，是不知道如何路由到这个 IP 地址的，所以如果要请求外部地址的话，需要先通过 MASQUERADE 策略将这个 IP 转换成宿主机出口网卡的 IP。
 
 ```shell
 # 打开IP转发
@@ -297,11 +297,14 @@ root@pjm2001:~# iptables -t nat -A PREROUTING -p tcp -m tcp --dport 80 -j DNAT -
 root@pjm2001:~#
 ```
 
-这样就可以把宿主机上 80 端口的 TCP 请求转发到 Namespace 中的地址172.18.0.2:80,从而实现外部的应用调用。
+这样就可以把宿主机上 80 端口的 TCP 请求转发到 Namespace 中的地址 172.18.0.2:80,从而实现外部的应用调用。
 
 ‍
+
 ## 4. 结尾
+
 做完上述实验之后，记得恢复网络设置。
+
 ```shell
 root@pjm2001:~# ip link delete veth0
 root@pjm2001:~# ip link delete br0
