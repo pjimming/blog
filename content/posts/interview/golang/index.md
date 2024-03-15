@@ -13,8 +13,8 @@ images: []
 tags: [interview, golang]
 categories: [interview]
 
-featuredImage: "https://pjimming.github.io/picx-images-hosting/image.9nzjdzppc1.webp"
-featuredImagePreview: "https://pjimming.github.io/picx-images-hosting/image.9nzjdzppc1.webp"
+featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.9nzjdzppc1.webp"
+featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.9nzjdzppc1.webp"
 
 outdatedInfoWarning: true
 ---
@@ -155,7 +155,7 @@ for i := range nums {
 
 ### 什么是 GMP 模型
 
-![](https://pjimming.github.io/picx-images-hosting/image.2dog450tyj.webp)
+![](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.2dog450tyj.webp)
 
 - Goroutine（Go 协程）： Goroutine 是 Go 语言中的轻量级线程，它由 Go 运行时（runtime）调度和管理。Goroutine 可以看作是执行并发任务的独立单位，相较于传统的线程，Goroutine 的创建和切换成本非常低，因此可以高效地支持大量的并发任务。
 - M（线程）： M 代表着操作系统的线程（machine thread）。每个 M 都会关联一个线程，它负责执行 Goroutine。M 的数量是由 Go 运行时动态管理的，它会根据系统的核心数量等因素动态调整 M 的数量，以充分利用系统资源。
