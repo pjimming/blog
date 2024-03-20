@@ -68,14 +68,6 @@ title = ""
 url = "/categories/"
 weight = 3
 [[menu.main]]
-identifier = "about"
-name = "关于"
-post = ""
-pre = "<i class='fa-regular fa-address-card'></i>"
-title = ""
-url = "/about/"
-weight = 4
-[[menu.main]]
 identifier = "friend"
 name = "友链"
 post = ""
@@ -83,6 +75,22 @@ pre = "<i class='fa-solid fa-user-group'></i>"
 title = ""
 url = "/friend/"
 weight = 5
+[[menu.main]]
+identifier = "book-list"
+name = "书单"
+post = ""
+pre = "<i class='fa-solid fa-book'></i>"
+title = ""
+url = "/book-list/"
+weight = 6
+[[menu.main]]
+identifier = "about"
+name = "关于"
+post = ""
+pre = "<i class='fa-regular fa-address-card'></i>"
+title = ""
+url = "/about/"
+weight = 10
 
 [params]
 # 网站默认主题样式 ["auto", "light", "dark"]
