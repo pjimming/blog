@@ -23,10 +23,12 @@ outdatedInfoWarning: false
 
 ---
 
-{{<admonition info >}}
+{{<admonition info "前言" >}}
 分享一些自己已读、未读或正在读的书籍，包括但不限于技术、哲学、社会科学、自然科学、文学类
 
 如果有好书推荐，请您留言告知，不胜感激！
+
+Z-Library 中国区官方：[https://zh.zlibrary-global.se/](https://zh.zlibrary-global.se/)
 {{</admonition>}}
 
 ## 技术类

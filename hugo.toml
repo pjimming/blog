@@ -142,7 +142,7 @@ author = true
 # 网站创立年份
 since = 2024
 # ICP 备案信息，仅在中国使用 (支持 HTML 格式)
-icp = "浙ICP备2024074882号"
+icp = '<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=备案编号" target="_blank">浙ICP备2024074882号</a>'
 # 许可协议信息 (支持 HTML 格式)
 license = ''
 

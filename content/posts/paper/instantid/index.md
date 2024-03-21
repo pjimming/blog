@@ -25,4 +25,20 @@ outdatedInfoWarning: true
 
 ---
 
+## Motivation
+
+现有 Face Customization 存在的缺点：
+
+- High storage demands: 需要大量的空间去存储训练得到的模型
+- Lengthy fine-tuning process: 训练代价大
+- Need multiple reference images: 需要多张参考图
+
+InstantID 改善：
+
+- Zero-shot: 零插拔
+- Tuning-free: 低代价
+- High fidelity: 高保真
+
+## Method
+
 ![InstantID的算法流程](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240321/imageimage.51dwsrmb8x.webp)
