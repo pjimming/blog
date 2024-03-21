@@ -32,7 +32,7 @@ outdatedInfoWarning: false
 {{< admonition info "涉及技术栈、组件以及工具" >}}
 博客框架：[Hugo](https://github.com/gohugoio/hugo)
 
-Hugo 主题：[LoveIt](https://github.com/dillonzq/LoveIt)
+主题样式：[LoveIt](https://github.com/dillonzq/LoveIt)
 
 发布平台：[Netlify](https://www.netlify.com/)
 
