@@ -10,8 +10,8 @@ description: ""
 license: ""
 images: []
 
-tags: [算法, 树状数组, 数据结构, acm]
-categories: [acm]
+tags: [算法, 树状数组, 数据结构, ACM]
+categories: [ACM]
 
 featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp"
 featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp"

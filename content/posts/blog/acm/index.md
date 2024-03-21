@@ -10,7 +10,7 @@ description: ""
 license: ""
 images: []
 
-tags: [acm, blog, 生活]
+tags: [ACM, blog, 生活]
 categories: [blog]
 
 featuredImage: "featured-image.png"

@@ -10,7 +10,7 @@ description: ""
 license: ""
 images: []
 
-tags: [paper, photomaker, aigc]
+tags: [paper, PhotoMaker, AIGC]
 categories: [paper]
 
 featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240320/imageimage.8ad0o16p7z.webp"
@@ -19,7 +19,7 @@ featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@
 outdatedInfoWarning: true
 ---
 
-泛读腾讯 ARC Lab+南开程明明的[PhotoMaker](https://arxiv.org/abs/2312.04461)论文，大致介绍动机、实现方法与成果
+泛读腾讯 ARC Lab 与南开大学程明明老师联合发表的[PhotoMaker](https://arxiv.org/abs/2312.04461)论文，大致介绍动机、实现方法与成果
 
 <!--more-->
 
