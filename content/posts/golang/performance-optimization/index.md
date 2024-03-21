@@ -34,7 +34,7 @@ outdatedInfoWarning: true
 
 ## 性能衡量工具：Benchmark
 
-[Go 语言使用 benchmark 进行性能测试](https://zhuanlan.zhihu.com/p/426081521)
+[Go benchmark 详解 ](https://www.cnblogs.com/yahuian/p/go-benchmark.html)
 
 接下来测试下列代码的性能
 
@@ -75,7 +75,7 @@ ok      go-performance-optimization/benchmark   2.111s
 - `0 B/op`：每次执行申请的内存
 - `0 allocs/op`：每次执行申请几次内存
 
-## Slice
+## Slice：优化内存空间
 
 ### 预分配内存
 
@@ -546,3 +546,7 @@ ok      go-performance-optimization/atomic      3.967s
 - 普通应用，不要一味地追求程序的性能
 - 越高深的性能优化手段越容易出现问题
 - 在满足正确、可靠、简洁、清晰等质量要求的前提下，提高程序性能
+
+## 参考
+
+- [Go 语言高性能编程](https://geektutu.com/post/high-performance-go.html)
