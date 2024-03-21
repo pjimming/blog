@@ -25,12 +25,13 @@ outdatedInfoWarning: true
 
 ---
 
-> 该文章中涉及到的代码：[https://github.com/pjimming/blog-code/tree/main/go-performance-optimization](https://github.com/pjimming/blog-code/tree/main/go-performance-optimization)
-
-## 性能优化时，应该关注的事项
+{{<admonition note "前言">}}
 
 - 性能优化的前提是满足正确、可靠、健壮、可读
 - 性能优化时综合评估，有时候时间效率和空间效率可能会相互对立
+- 该文章中涉及到的代码：[https://github.com/pjimming/blog-code/tree/main/go-performance-optimization](https://github.com/pjimming/blog-code/tree/main/go-performance-optimization)
+
+{{</admonition>}}
 
 ## 性能衡量工具：Benchmark
 
