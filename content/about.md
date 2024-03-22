@@ -30,6 +30,8 @@ outdatedInfoWarning: false
 > 江明说代码，说生活，说万物。
 
 {{< admonition info "涉及技术栈、组件以及工具" >}}
+编辑器：[Visual Studio Code](https://code.visualstudio.com/)
+
 博客框架：[Hugo](https://github.com/gohugoio/hugo)
 
 主题样式：[LoveIt](https://github.com/dillonzq/LoveIt)

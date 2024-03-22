@@ -118,15 +118,15 @@ mobileMode = "auto"
 #  页面头部导航栏标题配置
 [params.header.title]
 # LOGO 的 URL
-logo = ""
+logo = "/images/chick.svg"
 # 标题名称
-name = "江明说|Jimmy Talk"
+name = "Jimmy Talk"
 # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
-pre = ""
+pre = ''
 # 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
-post = ""
+post = ''
 #  是否为标题显示打字机动画
-typeit = true
+typeit = false
 
 # 页面底部信息配置
 [params.footer]
@@ -171,7 +171,7 @@ title = "江明说"
 # 是否隐藏网站图标资源链接
 noFavicon = false
 # 更现代的 SVG 网站图标, 可替代旧的 .png 和 .ico 文件
-svgFavicon = "/images/favicon.ico"
+svgFavicon = "/images/chick.svg"
 # Android 浏览器主题色
 themeColor = "#ffffff"
 # Safari 图标颜色
