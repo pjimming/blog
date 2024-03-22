@@ -42,3 +42,7 @@ InstantID 改善：
 ## Method
 
 ![InstantID的算法流程](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240321/imageimage.51dwsrmb8x.webp)
+
+## Result
+
+![InstantID的成果](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240322/imageimage.6ik1vg1qbh.webp)
