@@ -350,3 +350,8 @@ go tool pprof -http=:8080 -base heap-base heap-target
 ## 总结
 
 本文主要内容为 pprof 工具的使用，介绍了通过命令行、可视化等方式进行排查。虽然例子比较简单，但是相信通过这些简单的例子可以让你不在畏惧 pprof。
+
+## Reference
+
+- [golang pprof 实战](https://blog.wolfogre.com/posts/go-ppof-practice/)
+- [Go 性能分析工具](https://farmerchillax.github.io/2023/07/04/Go%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/#)
