@@ -41,6 +41,8 @@ outdatedInfoWarning: false
 评论系统：[Giscus](https://github.com/giscus/giscus)
 
 图床工具：[PicX](https://github.com/XPoet/picx)
+
+Static CDN：[jsDelivr](https://www.jsdelivr.com/)
 {{< /admonition >}}
 
 ## 关于我
