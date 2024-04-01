@@ -10,7 +10,7 @@ description: ""
 license: ""
 images: []
 
-tags: [inerview, mysql]
+tags: [interview, mysql]
 categories: [interview]
 
 featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.4qr2l18ab2.webp"
