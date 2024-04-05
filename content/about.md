@@ -55,7 +55,7 @@ Static CDN：[jsDelivr](https://www.jsdelivr.com/)
 
 本科就读于浙江科技大学（2020.9 ~ 2024.6）工学学士，计算机科学与技术。
 
-ACM 败犬，野生 Gopher，西二旗打工人。
+ACM 败犬，野生 Gopher，北京西二旗打工人。
 
 爱好：编程，美女。
 
