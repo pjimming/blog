@@ -30,6 +30,7 @@ outdatedInfoWarning: false
 数据库
 
 - [x] 设计数据库
+- [x] 资源初始化
 
 后端服务
 
@@ -189,6 +190,7 @@ CREATE TABLE `role_resource_rel`
 | username      | varchar\(50\)   | NO   | UNI | null              |                                               |
 | password_hash | varchar\(255\)  | NO   |     | null              |                                               |
 | role_id       | bigint unsigned | NO   | MUL | 0                 |                                               |
+| is_enable     | boolean         | YES  |     | TRUE              |                                               |
 | last_login    | datetime        | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
 
 建表语句：
@@ -204,6 +206,7 @@ CREATE TABLE IF NOT EXISTS `user_basic`
     `username`      VARCHAR(50)     NOT NULL UNIQUE COMMENT '用户名',
     `password_hash` VARCHAR(255)    NOT NULL COMMENT '加密过后的密码',
     `role_id`       bigint unsigned NOT NULL DEFAULT 0 COMMENT '所属角色',
+    `is_enable`     boolean                  DEFAULT TRUE COMMENT '是否启用',
     `last_login`    datetime        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后登录时间',
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_user_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
