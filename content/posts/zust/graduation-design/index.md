@@ -36,7 +36,9 @@ outdatedInfoWarning: false
 - [x] 登录/注册/登出
 - [x] 权限模块
 - [ ] 角色管理
+- [ ] 用户管理
 - [x] 资源树管理
+- [ ] PhotoMaker
 
 前端页面
 
@@ -44,6 +46,7 @@ outdatedInfoWarning: false
 - [ ] 角色管理页面
 - [x] 资源管理页面
 - [ ] 用户管理页面
+- [ ] 首页业务页面
 
 测试
 
