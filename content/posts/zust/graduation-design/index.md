@@ -256,6 +256,18 @@ CREATE TABLE IF NOT EXISTS `model_option`
 
 ### 系统模块
 
+### 数据初始化
+
+```sql
+insert into magic_camera.resource (id, created_at, updated_at, deleted_at, name, code, type, parent_id, order, icon, component, path, is_show, is_enable)
+values  (1, '2024-04-06 07:04:23', '2024-04-06 07:13:28', null, '资源管理', 'Resource_Mgt', 'MENU', 2, 1, 'i-fe:list', '/src/views/sys/resource/index.vue', '/pms/resource', 1, 1),
+        (2, '2024-04-06 07:04:53', '2024-04-06 07:04:53', null, '系统管理', 'SysMgt', 'MENU', 0, 2, 'i-fe:grid', '', '', 1, 1),
+        (3, '2024-04-06 07:05:00', '2024-04-06 07:13:28', null, '角色管理', 'RoleMgt', 'MENU', 2, 2, 'i-fe:user-check', '/src/views/sys/role/index.vue', '/pms/role', 1, 1),
+        (4, '2024-04-06 07:05:00', '2024-04-06 07:13:28', null, '用户管理', 'UserMgt', 'MENU', 2, 3, 'i-fe:user', '/src/views/sys/user/index.vue', '/pms/user', 1, 1),
+        (5, '2024-04-06 07:05:01', '2024-04-06 07:13:28', null, '分配用户', 'RoleUser', 'MENU', 3, 1, 'i-fe:user-plus', '/src/views/sys/role/role-user.vue', '/pms/role/user/:roleId', 1, 1),
+        (8, '2024-04-06 07:05:01', '2024-04-06 07:05:01', null, '个人资料', 'UserProfile', 'MENU', 0, 99, 'i-fe:user', '/src/views/profile/index.vue', '/profile', 0, 1);
+```
+
 ## AI 模型需求
 
 ### PhotoMaker
