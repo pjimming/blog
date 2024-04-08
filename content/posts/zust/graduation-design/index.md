@@ -39,7 +39,8 @@ outdatedInfoWarning: false
 - [ ] 角色管理
 - [ ] 用户管理
 - [x] 资源树管理
-- [ ] PhotoMaker
+- [x] PhotoMaker
+- [ ] Prompt 管理
 
 前端页面
 
@@ -48,6 +49,7 @@ outdatedInfoWarning: false
 - [x] 资源管理页面
 - [ ] 用户管理页面
 - [ ] 首页业务页面
+- [ ] Prompt 管理
 
 测试
 
@@ -55,13 +57,17 @@ outdatedInfoWarning: false
 - [x] 权限模块
 - [ ] 用户模块
 - [ ] 角色模块
+- [ ] Prompt 模块
+- [ ] 业务模块
 
 运维相关
 
-- [ ] CI/CD
-- [ ] Nginx 部署
+- [x] 流水线发布（前端）
+- [x] 流水线发布（后端）
+- [x] Nginx 部署
 - [x] MySQL 部署
 - [x] Redis 部署
+- [ ] SSL/TLS 证书
 - [ ] 监控
 - [ ] 日志
 
