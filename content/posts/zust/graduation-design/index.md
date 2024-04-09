@@ -278,33 +278,488 @@ values  (1, '2024-04-06 07:04:23', '2024-04-06 07:13:28', null, '资源管理', 
 
 模型算法部署在了 [Replicate](https://replicate.com/) 上，通过 http 接口的方式暴露给后端使用。
 
-## 前端需求
+## 接口列表
 
-### 登录/注册
+### 1. "获取四位验证码"
 
-### 角色管理
+1. route definition
 
-### 资源管理
+- Url: /api/v1/captcha
+- Method: GET
+- Request: `-`
+- Response: `GetCaptchaResp`
 
-### 用户管理
+2. request definition
 
-### 造型选项管理
+3. response definition
 
-### 首页业务实现
+```golang
+type GetCaptchaResp struct {
+	CaptchaId string `json:"captcha_id"`
+	B64s string `json:"b64s"`
+}
+```
 
-## 后端需求
+### 2. "获取 tmp 目录下文件"
 
-### 登录/注册
+1. route definition
 
-### 角色管理
+- Url: /api/v1/file/:dir/:filename
+- Method: GET
+- Request: `GetFileReq`
+- Response: `-`
 
-### 资源管理
+2. request definition
 
-### 用户管理
+```golang
+type GetFileReq struct {
+	Dir string `path:"dir"`
+	Filename string `path:"filename"`
+}
+```
 
-### 造型选项管理
+3. response definition
 
-### 业务实现
+### 3. "探活 ping"
+
+1. route definition
+
+- Url: /ping
+- Method: GET
+- Request: `-`
+- Response: `-`
+
+2. request definition
+
+3. response definition
+
+### 4. "生成照片"
+
+1. route definition
+
+- Url: /api/v1/generate/photo
+- Method: POST
+- Request: `GeneratePhotoReq`
+- Response: `GeneratePhotoResp`
+
+2. request definition
+
+```golang
+type GeneratePhotoReq struct {
+	Images []string `form:"-"`
+	Style string `form:"style"`
+}
+```
+
+3. response definition
+
+```golang
+type GeneratePhotoResp struct {
+	Output string `json:"output"`
+}
+```
+
+### 5. "获取角色权限树"
+
+1. route definition
+
+- Url: /api/v1/role/permissions/tree
+- Method: GET
+- Request: `-`
+- Response: `GetResourceTreeResp`
+
+2. request definition
+
+3. response definition
+
+```golang
+type GetResourceTreeResp struct {
+	Resource []*Resource `json:"resource"`
+}
+```
+
+### 6. "新增资源"
+
+1. route definition
+
+- Url: /api/v1/resource
+- Method: POST
+- Request: `AddResourceReq`
+- Response: `AddResourceResp`
+
+2. request definition
+
+```golang
+type AddResourceReq struct {
+	Name string `json:"name"`
+	Code string `json:"code"`
+	Type string `json:"type,optional"`
+	ParentID int `json:"parentId,optional"`
+	Path string `json:"path,optional"`
+	Icon string `json:"icon,optional"`
+	Component string `json:"component,optional"`
+	IsShow bool `json:"isShow,optional"`
+	IsEnable bool `json:"isEnable,optional"`
+	Order int `json:"order"`
+}
+```
+
+3. response definition
+
+```golang
+type AddResourceResp struct {
+	ID uint64 `json:"id"`
+}
+```
+
+### 7. "修改资源"
+
+1. route definition
+
+- Url: /api/v1/resource/:id
+- Method: PUT
+- Request: `SaveResourceReq`
+- Response: `SaveResourceResp`
+
+2. request definition
+
+```golang
+type SaveResourceReq struct {
+	ID uint64 `path:"id"`
+	Name string `json:"name"`
+	Code string `json:"code"`
+	Type string `json:"type,optional"`
+	ParentID int `json:"parentId,optional"`
+	Path string `json:"path,optional"`
+	Icon string `json:"icon,optional"`
+	Component string `json:"component,optional"`
+	IsShow bool `json:"isShow,optional"`
+	IsEnable bool `json:"isEnable,optional"`
+	Order int `json:"order"`
+}
+```
+
+3. response definition
+
+```golang
+type SaveResourceResp struct {
+	ID uint64 `json:"id"`
+}
+```
+
+### 8. "删除资源"
+
+1. route definition
+
+- Url: /api/v1/resource/:id
+- Method: DELETE
+- Request: `DeleteResourceReq`
+- Response: `DeleteResourceResp`
+
+2. request definition
+
+```golang
+type DeleteResourceReq struct {
+	ID uint64 `path:"id"`
+}
+```
+
+3. response definition
+
+```golang
+type DeleteResourceResp struct {
+	DelectCount int `json:"deleteCount"`
+}
+```
+
+### 9. "获取菜单资源树"
+
+1. route definition
+
+- Url: /api/v1/resource/menu/tree
+- Method: GET
+- Request: `-`
+- Response: `GetResourceTreeResp`
+
+2. request definition
+
+3. response definition
+
+```golang
+type GetResourceTreeResp struct {
+	Resource []*Resource `json:"resource"`
+}
+```
+
+### 10. "给用户分配角色"
+
+1. route definition
+
+- Url: /api/v1/assign/roles
+- Method: PUT
+- Request: `AssignRolesReq`
+- Response: `-`
+
+2. request definition
+
+```golang
+type AssignRolesReq struct {
+	ID uint64 `json:"id"`
+	RoleId uint64 `json:"roleId"`
+	Username string `json:"username"`
+}
+```
+
+3. response definition
+
+### 11. "新增角色"
+
+1. route definition
+
+- Url: /api/v1/role
+- Method: POST
+- Request: `AddRoleReq`
+- Response: `AddRoleResp`
+
+2. request definition
+
+```golang
+type AddRoleReq struct {
+	Code string `json:"code"`
+	Name string `json:"name"`
+	IsEnable bool `json:"isEnable"`
+	ResourceIds []uint64 `json:"resourceIds"`
+}
+```
+
+3. response definition
+
+```golang
+type AddRoleResp struct {
+	ID uint64 `json:"id"`
+}
+```
+
+### 12. "更新角色"
+
+1. route definition
+
+- Url: /api/v1/role/:id
+- Method: PUT
+- Request: `UpdateRoleReq`
+- Response: `-`
+
+2. request definition
+
+```golang
+type UpdateRoleReq struct {
+	ID uint64 `path:"id"`
+	Code string `json:"code"`
+	Name string `json:"name"`
+	IsEnable bool `json:"isEnable"`
+	ResourceIds []uint64 `json:"resourceIds"`
+}
+```
+
+3. response definition
+
+### 13. "查询角色"
+
+1. route definition
+
+- Url: /api/v1/role/all
+- Method: GET
+- Request: `GetRoleAllReq`
+- Response: `GetRoleAllResp`
+
+2. request definition
+
+```golang
+type GetRoleAllReq struct {
+	Code string `form:"code,optional"`
+	Name string `form:"name,optional"`
+	IsEnable bool `form:"isEnable,default=false"`
+}
+```
+
+3. response definition
+
+```golang
+type GetRoleAllResp struct {
+	Items []*Role `json:"items"`
+}
+```
+
+### 14. "分页查询角色"
+
+1. route definition
+
+- Url: /api/v1/role/page
+- Method: GET
+- Request: `GetRolePageReq`
+- Response: `GetRolePageResp`
+
+2. request definition
+
+```golang
+type GetRolePageReq struct {
+	Page int `form:"page,default=1"`
+	Size int `form:"size,default=10"`
+	Code string `form:"code,optional"`
+	Name string `form:"name,optional"`
+}
+```
+
+3. response definition
+
+```golang
+type GetRolePageResp struct {
+	Items []*Role `json:"items"`
+	Total int64 `json:"total"`
+}
+```
+
+### 15. "分页查询用户"
+
+1. route definition
+
+- Url: /api/v1/user
+- Method: GET
+- Request: `GetUserPageReq`
+- Response: `GetUserPageResp`
+
+2. request definition
+
+```golang
+type GetUserPageReq struct {
+	Page int `form:"page,default=1"`
+	Size int `form:"size,default=10"`
+	Username string `form:"username,optional"` // 用户名
+}
+```
+
+3. response definition
+
+```golang
+type GetUserPageResp struct {
+	Items []*User `json:"items"`
+	Total int64 `json:"total"`
+}
+```
+
+### 16. "获取全部角色"
+
+1. route definition
+
+- Url: /api/v1/user/all
+- Method: GET
+- Request: `-`
+- Response: `GetUserPageResp`
+
+2. request definition
+
+3. response definition
+
+```golang
+type GetUserPageResp struct {
+	Items []*User `json:"items"`
+	Total int64 `json:"total"`
+}
+```
+
+### 17. "获取用户详情"
+
+1. route definition
+
+- Url: /api/v1/user/detail
+- Method: GET
+- Request: `-`
+- Response: `GetUserDetailResp`
+
+2. request definition
+
+3. response definition
+
+```golang
+type GetUserDetailResp struct {
+	ID uint64 `json:"id"` // 序号
+	CreatedAt int64 `json:"createdAt"` // 创建时间
+	UpdatedAt int64 `json:"updatedAt"` // 更新时间
+	Username string `json:"username"` // 账号
+	LastLogin int64 `json:"lastLogin"` // 最后登录时间
+	IsEnable bool `json:"isEnable"` // 是否启用:0-禁用;1-启用
+	Role *Role `json:"role"` // 角色
+}
+```
+
+### 18. "用户登录"
+
+1. route definition
+
+- Url: /api/v1/user/login
+- Method: POST
+- Request: `UserLoginReq`
+- Response: `UserLoginResp`
+
+2. request definition
+
+```golang
+type UserLoginReq struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Captcha string `json:"captcha"`
+	CaptchaId string `json:"captchaId"`
+}
+```
+
+3. response definition
+
+```golang
+type UserLoginResp struct {
+	Token string `json:"token"`
+}
+```
+
+### 19. "用户注册"
+
+1. route definition
+
+- Url: /api/v1/user/register
+- Method: POST
+- Request: `UserRegisterReq`
+- Response: `UserRegisterResp`
+
+2. request definition
+
+```golang
+type UserRegisterReq struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Captcha string `json:"captcha"`
+	CaptchaId string `json:"captchaId"`
+}
+```
+
+3. response definition
+
+```golang
+type UserRegisterResp struct {
+	ID int32 `json:"id"`
+}
+```
+
+### 20. "用户登出"
+
+1. route definition
+
+- Url: /api/v1/user/logout
+- Method: POST
+- Request: `-`
+- Response: `-`
+
+2. request definition
+
+3. response definition
 
 ## 运维需求
 
