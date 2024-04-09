@@ -379,7 +379,105 @@ type GetResourceTreeResp struct {
 }
 ```
 
-### 6. "新增资源"
+### 6. "分页查询 Prompt Option"
+
+1. route definition
+
+- Url: /api/v1/prompt-option
+- Method: GET
+- Request: `GetPromptOptionPageReq`
+- Response: `GetPromptOptionResp`
+
+2. request definition
+
+```golang
+type GetPromptOptionPageReq struct {
+	Page int `form:"page,default=1"`
+	Size int `form:"size,default=10"`
+	Name string `form:"name,optional"`
+	Prompt string `form:"prompt,optional"`
+	Desc string `form:"desc,optional"`
+}
+```
+
+3. response definition
+
+```golang
+type GetPromptOptionResp struct {
+	Items []*PromptOption `json:"items"`
+	Total int64 `json:"total"`
+}
+```
+
+### 7. "新增 Prompt Option"
+
+1. route definition
+
+- Url: /api/v1/prompt-option
+- Method: POST
+- Request: `AddPromptOptionReq`
+- Response: `AddPromptOptionResp`
+
+2. request definition
+
+```golang
+type AddPromptOptionReq struct {
+	Name string `json:"name"` // 选项名
+	Prompt string `json:"prompt"` // prompt
+	Desc string `json:"desc,optional"` // 描述
+}
+```
+
+3. response definition
+
+```golang
+type AddPromptOptionResp struct {
+	ID uint64 `json:"id"`
+}
+```
+
+### 8. "修改 Prompt Option"
+
+1. route definition
+
+- Url: /api/v1/prompt-option
+- Method: PUT
+- Request: `UpdatePromptOptionReq`
+- Response: `-`
+
+2. request definition
+
+```golang
+type UpdatePromptOptionReq struct {
+	ID uint64 `path:"id"` // 序号
+	Name string `json:"name"` // 选项名
+	Prompt string `json:"prompt"` // prompt
+	Desc string `json:"desc,optional"` // 描述
+}
+```
+
+3. response definition
+
+### 9. "删除 Prompt Option"
+
+1. route definition
+
+- Url: /api/v1/prompt-option
+- Method: DELETE
+- Request: `DeletePromptOptionReq`
+- Response: `-`
+
+2. request definition
+
+```golang
+type DeletePromptOptionReq struct {
+	ID uint64 `path:"id"`
+}
+```
+
+3. response definition
+
+### 10. "新增资源"
 
 1. route definition
 
@@ -413,7 +511,7 @@ type AddResourceResp struct {
 }
 ```
 
-### 7. "修改资源"
+### 11. "修改资源"
 
 1. route definition
 
@@ -448,7 +546,7 @@ type SaveResourceResp struct {
 }
 ```
 
-### 8. "删除资源"
+### 12. "删除资源"
 
 1. route definition
 
@@ -473,7 +571,7 @@ type DeleteResourceResp struct {
 }
 ```
 
-### 9. "获取菜单资源树"
+### 13. "获取菜单资源树"
 
 1. route definition
 
@@ -492,7 +590,7 @@ type GetResourceTreeResp struct {
 }
 ```
 
-### 10. "给用户分配角色"
+### 14. "给用户分配角色"
 
 1. route definition
 
@@ -513,7 +611,7 @@ type AssignRolesReq struct {
 
 3. response definition
 
-### 11. "新增角色"
+### 15. "新增角色"
 
 1. route definition
 
@@ -541,7 +639,7 @@ type AddRoleResp struct {
 }
 ```
 
-### 12. "更新角色"
+### 16. "更新角色"
 
 1. route definition
 
@@ -564,7 +662,7 @@ type UpdateRoleReq struct {
 
 3. response definition
 
-### 13. "查询角色"
+### 17. "查询角色"
 
 1. route definition
 
@@ -591,7 +689,7 @@ type GetRoleAllResp struct {
 }
 ```
 
-### 14. "分页查询角色"
+### 18. "分页查询角色"
 
 1. route definition
 
@@ -620,80 +718,7 @@ type GetRolePageResp struct {
 }
 ```
 
-### 15. "分页查询用户"
-
-1. route definition
-
-- Url: /api/v1/user
-- Method: GET
-- Request: `GetUserPageReq`
-- Response: `GetUserPageResp`
-
-2. request definition
-
-```golang
-type GetUserPageReq struct {
-	Page int `form:"page,default=1"`
-	Size int `form:"size,default=10"`
-	Username string `form:"username,optional"` // 用户名
-}
-```
-
-3. response definition
-
-```golang
-type GetUserPageResp struct {
-	Items []*User `json:"items"`
-	Total int64 `json:"total"`
-}
-```
-
-### 16. "获取全部角色"
-
-1. route definition
-
-- Url: /api/v1/user/all
-- Method: GET
-- Request: `-`
-- Response: `GetUserPageResp`
-
-2. request definition
-
-3. response definition
-
-```golang
-type GetUserPageResp struct {
-	Items []*User `json:"items"`
-	Total int64 `json:"total"`
-}
-```
-
-### 17. "获取用户详情"
-
-1. route definition
-
-- Url: /api/v1/user/detail
-- Method: GET
-- Request: `-`
-- Response: `GetUserDetailResp`
-
-2. request definition
-
-3. response definition
-
-```golang
-type GetUserDetailResp struct {
-	ID uint64 `json:"id"` // 序号
-	CreatedAt int64 `json:"createdAt"` // 创建时间
-	UpdatedAt int64 `json:"updatedAt"` // 更新时间
-	Username string `json:"username"` // 账号
-	LastLogin int64 `json:"lastLogin"` // 最后登录时间
-	IsEnable bool `json:"isEnable"` // 是否启用:0-禁用;1-启用
-	Role *Role `json:"role"` // 角色
-}
-```
-
-### 18. "用户登录"
+### 19. "用户登录"
 
 1. route definition
 
@@ -721,7 +746,7 @@ type UserLoginResp struct {
 }
 ```
 
-### 19. "用户注册"
+### 20. "用户注册"
 
 1. route definition
 
@@ -749,7 +774,7 @@ type UserRegisterResp struct {
 }
 ```
 
-### 20. "用户登出"
+### 21. "用户登出"
 
 1. route definition
 
@@ -761,6 +786,79 @@ type UserRegisterResp struct {
 2. request definition
 
 3. response definition
+
+### 22. "分页查询用户"
+
+1. route definition
+
+- Url: /api/v1/user
+- Method: GET
+- Request: `GetUserPageReq`
+- Response: `GetUserPageResp`
+
+2. request definition
+
+```golang
+type GetUserPageReq struct {
+	Page int `form:"page,default=1"`
+	Size int `form:"size,default=10"`
+	Username string `form:"username,optional"` // 用户名
+}
+```
+
+3. response definition
+
+```golang
+type GetUserPageResp struct {
+	Items []*User `json:"items"`
+	Total int64 `json:"total"`
+}
+```
+
+### 23. "获取全部角色"
+
+1. route definition
+
+- Url: /api/v1/user/all
+- Method: GET
+- Request: `-`
+- Response: `GetUserPageResp`
+
+2. request definition
+
+3. response definition
+
+```golang
+type GetUserPageResp struct {
+	Items []*User `json:"items"`
+	Total int64 `json:"total"`
+}
+```
+
+### 24. "获取用户详情"
+
+1. route definition
+
+- Url: /api/v1/user/detail
+- Method: GET
+- Request: `-`
+- Response: `GetUserDetailResp`
+
+2. request definition
+
+3. response definition
+
+```golang
+type GetUserDetailResp struct {
+	ID uint64 `json:"id"` // 序号
+	CreatedAt int64 `json:"createdAt"` // 创建时间
+	UpdatedAt int64 `json:"updatedAt"` // 更新时间
+	Username string `json:"username"` // 账号
+	LastLogin int64 `json:"lastLogin"` // 最后登录时间
+	IsEnable bool `json:"isEnable"` // 是否启用:0-禁用;1-启用
+	Role *Role `json:"role"` // 角色
+}
+```
 
 ## 运维需求
 
