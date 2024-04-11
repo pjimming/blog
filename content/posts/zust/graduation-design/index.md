@@ -40,7 +40,7 @@ outdatedInfoWarning: false
 - [x] 用户管理
 - [x] 资源树管理
 - [x] PhotoMaker
-- [ ] Prompt 管理
+- [x] Prompt 管理
 - [ ] 限流器
 
 前端页面
@@ -49,8 +49,8 @@ outdatedInfoWarning: false
 - [x] 角色管理页面
 - [x] 资源管理页面
 - [x] 用户管理页面
-- [ ] 首页业务页面
-- [ ] Prompt 管理
+- [x] 首页业务页面
+- [x] Prompt 管理
 
 测试
 
@@ -58,8 +58,8 @@ outdatedInfoWarning: false
 - [x] 权限模块
 - [ ] 用户模块
 - [ ] 角色模块
-- [ ] Prompt 模块
-- [ ] 业务模块
+- [x] Prompt 模块
+- [x] 业务模块
 
 运维相关
 
