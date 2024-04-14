@@ -76,7 +76,7 @@ outdatedInfoWarning: false
   - [x] node_exporter 部署
   - [x] mysqld_exporter 部署
   - [x] redis_exporter 部署
-- [ ] Grafana 部署
+- [x] Grafana 部署
 - [ ] SSL/TLS 证书
 - [ ] 日志
 
