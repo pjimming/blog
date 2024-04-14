@@ -41,7 +41,8 @@ outdatedInfoWarning: false
 - [x] 资源树管理
 - [x] PhotoMaker
 - [x] Prompt 管理
-- [ ] 限流器
+- [x] 系统参数管理
+- [x] 限流器
 
 前端页面
 
@@ -51,6 +52,8 @@ outdatedInfoWarning: false
 - [x] 用户管理页面
 - [x] 首页业务页面
 - [x] Prompt 管理
+- [x] 系统参数管理
+- [ ] 监控面板
 
 测试
 
@@ -68,8 +71,13 @@ outdatedInfoWarning: false
 - [x] Nginx 部署
 - [x] MySQL 部署
 - [x] Redis 部署
+- [x] 监控组件部署
+  - [x] Prometheus 部署
+  - [x] node_exporter 部署
+  - [x] mysqld_exporter 部署
+  - [x] redis_exporter 部署
+- [ ] Grafana 部署
 - [ ] SSL/TLS 证书
-- [ ] 监控
 - [ ] 日志
 
 {{</admonition>}}
