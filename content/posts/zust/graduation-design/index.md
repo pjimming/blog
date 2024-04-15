@@ -29,31 +29,50 @@ outdatedInfoWarning: false
 
 数据库
 
-- [x] 设计数据库
+- [x] 数据库设计
+  - [x] prompt_option: prompt 选项表
+  - [x] resource: 资源表
+  - [x] role: 角色表
+  - [x] role_resource_rel: 角色-资源关联表
+  - [x] sys_param: 系统参数表
+  - [x] user_basic: 用户表
+  - [ ] api_log: API 日志表
 - [x] 资源初始化
 
 后端服务
 
-- [x] 登录/注册/登出
-- [x] 权限模块
-- [x] 角色管理
-- [x] 用户管理
-- [x] 资源树管理
-- [x] PhotoMaker
-- [x] Prompt 管理
-- [x] 系统参数管理
-- [x] 限流器
+- [ ] API
+  - [x] 登录/注册/登出
+  - [x] PhotoMaker
+  - [x] 权限模块
+    - [x] 角色管理：增删改查
+    - [x] 用户管理：增删改查
+    - [x] 资源树管理：增删改查
+  - [x] Prompt 管理：增删改查
+  - [x] 系统参数管理：增删改查
+  - [ ] API 日志模块：增查
+- [ ] 中间件
+  - [x] JWT 认证
+  - [x] 业务限流器
+  - [ ] API 日志记录
 
 前端页面
 
-- [x] 登录/注册/登出
-- [x] 角色管理页面
-- [x] 资源管理页面
-- [x] 用户管理页面
-- [x] 首页业务页面
-- [x] Prompt 管理
-- [x] 系统参数管理
-- [ ] 监控面板
+- [x] 身份认证功能：登录/注册/登出
+- [x] 首页业务页面：魔力照相机
+- [x] 系统管理页面
+  - [x] 角色管理页面
+  - [x] 资源管理页面
+  - [x] 用户管理页面
+  - [x] Prompt 管理页面
+  - [x] 系统参数管理页面
+- [x] 监控视图页面
+  - [x] 服务器监控面板
+  - [x] Go 进程监控面板
+  - [x] Redis 监控面板
+  - [x] MySQL 监控面板
+  - [x] WEB API 监控面板
+- [ ] API 日志查询页面
 
 测试
 
@@ -77,8 +96,14 @@ outdatedInfoWarning: false
   - [x] mysqld_exporter 部署
   - [x] redis_exporter 部署
 - [x] Grafana 部署
+  - [x] 服务器 Dashboard
+  - [x] Go 进程 Dashboard
+  - [x] Redis Dashboard
+  - [x] MySQL Dashboard
+  - [x] WEB API Dashboard
 - [ ] SSL/TLS 证书
 - [ ] 日志
+- [ ] Prompt 设置
 
 {{</admonition>}}
 
