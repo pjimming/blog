@@ -56,7 +56,6 @@ outdatedInfoWarning: false
   - [x] 业务限流器
   - [ ] API 日志记录
     - [ ] 字段脱敏
-    - [ ] 长度截断
 - [ ] 优化
   - [x] 对 DB 封装一层 Redis 缓存
 
@@ -904,3 +903,11 @@ type GetUserDetailResp struct {
 ### 监控
 
 ### 日志分析
+
+## 遇到的问题
+
+### 图片上传前后端交互
+
+### 记录 handler 层解析出的 Request 结构体
+
+### 数据库软删除与唯一索引冲突
