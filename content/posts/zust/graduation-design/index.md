@@ -36,7 +36,7 @@ outdatedInfoWarning: false
   - [x] role_resource_rel: 角色-资源关联表
   - [x] sys_param: 系统参数表
   - [x] user_basic: 用户表
-  - [ ] api_log: API 日志表
+  - [x] api_log: API 日志表
 - [x] 资源初始化
 
 后端服务
@@ -55,6 +55,10 @@ outdatedInfoWarning: false
   - [x] JWT 认证
   - [x] 业务限流器
   - [ ] API 日志记录
+    - [ ] 字段脱敏
+    - [ ] 长度截断
+- [ ] 优化
+  - [x] 对 DB 封装一层 Redis 缓存
 
 前端页面
 
