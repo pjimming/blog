@@ -50,7 +50,7 @@ outdatedInfoWarning: false
     - [x] 资源树管理：增删改查
   - [x] Prompt 管理：增删改查
   - [x] 系统参数管理：增删改查
-  - [ ] API 日志模块：增查
+  - [x] API 日志模块：增查
 - [ ] 中间件
   - [x] JWT 认证
   - [x] 业务限流器
