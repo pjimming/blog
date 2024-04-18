@@ -76,7 +76,7 @@ outdatedInfoWarning: false
   - [x] Redis 监控面板
   - [x] MySQL 监控面板
   - [x] WEB API 监控面板
-- [ ] API 日志查询页面
+- [x] API 日志查询页面
 
 测试
 
@@ -106,7 +106,7 @@ outdatedInfoWarning: false
   - [x] MySQL Dashboard
   - [x] WEB API Dashboard
 - [ ] SSL/TLS 证书
-- [ ] 日志
+- [x] 日志
 - [ ] Prompt 设置
 
 {{</admonition>}}
