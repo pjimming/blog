@@ -54,9 +54,10 @@ outdatedInfoWarning: false
 - [ ] 中间件
   - [x] JWT 认证
   - [x] 业务限流器
-  - [ ] API 日志记录
-    - [ ] 字段脱敏
-- [ ] 优化
+    - [ ] 缓存限流次数
+  - [x] API 日志记录
+    - [x] 字段脱敏
+- [x] 优化
   - [x] 对 DB 封装一层 Redis 缓存
 
 前端页面
@@ -908,6 +909,6 @@ type GetUserDetailResp struct {
 
 ### 图片上传前后端交互
 
-### 记录 handler 层解析出的 Request 结构体
-
 ### 数据库软删除与唯一索引冲突
+
+### 前端 json 展示
