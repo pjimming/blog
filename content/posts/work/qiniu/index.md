@@ -108,3 +108,13 @@ outdatedInfoWarning: false
 因为我要成为老铁啦！！！
 
 ![来了，老铁！](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-698b168f7967ce447a17206db05e647f.3rb01ngpyk.webp)
+
+---
+
+潘江明
+
+二〇二四年四月一日 凌晨
+
+王磊烈士牺牲 23 周年祭
+
+记于 浙江科技大学
