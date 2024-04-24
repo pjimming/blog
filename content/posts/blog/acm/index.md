@@ -227,7 +227,20 @@ featuredImagePreview: "featured-image.png"
 
 #### 一些想展示的照片
 
-​![](assets/image-20240229171259-md8ihrm.png)​![](assets/image-20240229171309-np0xo2o.png)​​![](assets/image-20240229171439-5ru5c7i.png)​​​![mmexport1702548955507](assets/mmexport1702548955507-20240229172118-su5vbgl.jpg)​![IMG_20231126_205321](assets/IMG_20231126_205321-20240229172112-z3v7rir.jpg)​![IMG_20231126_205530](assets/IMG_20231126_205530-20240229172310-44djxnr.jpg)​​​
+​![](assets/image-20240229171259-md8ihrm.png)
+​![](assets/image-20240229171309-np0xo2o.png)
+​​![](assets/image-20240229171439-5ru5c7i.png)​​
+​![](assets/mmexport1702548955507-20240229172118-su5vbgl.jpg)
+​![](assets/IMG_20231126_205321-20240229172112-z3v7rir.jpg)​
+![](assets/IMG_20231126_205530-20240229172310-44djxnr.jpg)​​​
+
+### 2024 天梯赛
+
+天梯赛在 2024.4.20 举行。是我本科阶段的最后一场算法竞赛。
+
+这次有所突破，打了 226 分，拿了个人国二，以及团队省二国二。
+
+![](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240424/image-image.8hg9xf3bbd.webp)
 
 ## 结束
 
