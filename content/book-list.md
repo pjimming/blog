@@ -39,3 +39,4 @@ Z-Library 中国区官方：[https://zh.zlibrary-global.se/](https://zh.zlibrary
 |      [《设计模式之美》](https://book.douban.com/subject/35919931/)      |            |            |                                                                                                      |
 |        [《凤凰架构》](https://book.douban.com/subject/35492898/)        |            |            |                                                                                                      |
 | [《数据密集型应用系统设计》](https://book.douban.com/subject/30329536/) |            |            |                                                                                                      |
+|   [《MySQL 实战 45 讲》](https://time.geekbang.org/column/intro/139)    | 2024.04.24 |            |                                                                                                      |
