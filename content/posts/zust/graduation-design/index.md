@@ -13,8 +13,8 @@ images: []
 tags: [blog, 毕业设计]
 categories: [blog]
 
-featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240405/image-image.1lbllk4u06.webp"
-featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240405/image-image.1lbllk4u06.webp"
+featuredImage: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240405/image-image.1lbllk4u06.webp"
+featuredImagePreview: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240405/image-image.1lbllk4u06.webp"
 
 outdatedInfoWarning: false
 ---

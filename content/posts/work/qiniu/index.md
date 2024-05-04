@@ -13,8 +13,8 @@ images: []
 tags: [七牛云, blog, 工作]
 categories: [blog]
 
-featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-image.3nre3uugoz.webp"
-featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-image.3nre3uugoz.webp"
+featuredImage: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-image.3nre3uugoz.webp"
+featuredImagePreview: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-image.3nre3uugoz.webp"
 
 outdatedInfoWarning: false
 ---
@@ -35,7 +35,7 @@ outdatedInfoWarning: false
 
 > 小插曲：面试的过程有点曲折，好在有捷哥的帮助下，我还是在 2023-04-27 这天，有惊无险的 12 小时速通七牛。
 >
-> ![](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/awd.2dogxjwy9q.webp)
+> ![](https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/awd.2dogxjwy9q.webp)
 
 ## 很赞的同事
 
@@ -91,15 +91,15 @@ outdatedInfoWarning: false
 
 ## 图集
 
-![杭州七牛云](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-5.6f0gbxehhj.webp)
+![杭州七牛云](https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-5.6f0gbxehhj.webp)
 
-![入职配备的MacBook Pro 2017](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-3.lvi2mr18e.webp)
+![入职配备的MacBook Pro 2017](https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-3.lvi2mr18e.webp)
 
-![离职那天的工位](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-1.7w6ldoim7o.webp)
+![离职那天的工位](https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-1.7w6ldoim7o.webp)
 
-![企业微信截图](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-6.5tqspmk15z.webp)
+![企业微信截图](https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-6.5tqspmk15z.webp)
 
-![夕阳下的环球中心](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-2.39kyczk2kb.webp)
+![夕阳下的环球中心](https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-2.39kyczk2kb.webp)
 
 ## 去向-北京快手
 
@@ -107,7 +107,7 @@ outdatedInfoWarning: false
 
 因为我要成为老铁啦！！！
 
-![来了，老铁！](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-698b168f7967ce447a17206db05e647f.3rb01ngpyk.webp)
+![来了，老铁！](https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240401/image-698b168f7967ce447a17206db05e647f.3rb01ngpyk.webp)
 
 ---
 
