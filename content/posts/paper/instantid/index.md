@@ -13,8 +13,8 @@ images: []
 tags: [paper, InstantID, AIGC]
 categories: [paper]
 
-featuredImage: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240321/imageimage.4911b169xh.webp"
-featuredImagePreview: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240321/imageimage.4911b169xh.webp"
+featuredImage: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240321/imageimage.4911b169xh.webp"
+featuredImagePreview: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240321/imageimage.4911b169xh.webp"
 
 outdatedInfoWarning: true
 ---
@@ -41,7 +41,7 @@ InstantID 改善：
 
 ## Method
 
-![InstantID的算法流程](https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240321/imageimage.51dwsrmb8x.webp)
+![InstantID的算法流程](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240321/imageimage.51dwsrmb8x.webp)
 
 1. 通过 Face Encoder 解码人脸信息，代替 CLIP Encoder，并使用可训练的投影层将其投影到文本特征空间，将投影后得到的特征作为 Face Embedding
 2. 引入轻量级解耦交叉注意力自适应模块（Image Adapter），将 Face Embedding 与 Text Embedding 结合，支持图像作为提示，与 IP-Adapter 类似，把 Embedding 注入到 UNet 中
@@ -49,7 +49,7 @@ InstantID 改善：
 
 ## Result
 
-![InstantID的成果](https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240322/imageimage.6ik1vg1qbh.webp)
+![InstantID的成果](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240322/imageimage.6ik1vg1qbh.webp)
 
 ## Reference
 

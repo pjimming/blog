@@ -14,7 +14,7 @@ tags: [摄影, blog, 生活]
 categories: [摄影]
 
 featuredImage: ""
-featuredImagePreview: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240318/img.es9ntzwob.webp"
+featuredImagePreview: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240318/img.es9ntzwob.webp"
 
 outdatedInfoWarning: true
 ---

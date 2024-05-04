@@ -13,8 +13,8 @@ images: []
 tags: []
 categories: []
 
-featuredImage: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240504/image-image.4qr4q5cbtf.webp"
-featuredImagePreview: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240504/image-image.4qr4q5cbtf.webp"
+featuredImage: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240504/image-image.4qr4q5cbtf.webp"
+featuredImagePreview: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240504/image-image.4qr4q5cbtf.webp"
 
 outdatedInfoWarning: true
 ---
@@ -33,6 +33,6 @@ Server 层包括了连接器、分析器、优化器、执行器等，涵盖 MyS
 
 而存储引擎层负责数据的存储和提取。其架构模式为插件式，支持 InnoDB、MyISAM、Memory 等多个存储引擎。
 
-![MySQL架构图](https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240504/image-image.2yy5v9tyli.webp)
+![MySQL架构图](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240504/image-image.2yy5v9tyli.webp)
 
 ###

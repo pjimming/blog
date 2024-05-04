@@ -13,8 +13,8 @@ images: []
 tags: [golang, defer, interview]
 categories: [golang]
 
-featuredImage: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240318/imageimage.6wqhguvv2r.webp"
-featuredImagePreview: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240318/imageimage.6wqhguvv2r.webp"
+featuredImage: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240318/imageimage.6wqhguvv2r.webp"
+featuredImagePreview: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240318/imageimage.6wqhguvv2r.webp"
 
 outdatedInfoWarning: true
 ---
