@@ -13,8 +13,8 @@ images: []
 tags: []
 categories: []
 
-featuredImage: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240504/image-image.8s347bmo8x.webp"
-featuredImagePreview: "https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240504/image-image.8s347bmo8x.webp"
+featuredImage: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240504/image-image.8s347bmo8x.webp"
+featuredImagePreview: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240504/image-image.8s347bmo8x.webp"
 
 outdatedInfoWarning: true
 ---
@@ -61,7 +61,7 @@ change buffer 的作用就是将记录的变更操作缓存起来，因此缓存
 
 redo log 主要节省随机写磁盘的 IO 消耗（转为顺序写）；change buffer 主要节省随机读磁盘的 IO 消耗。
 
-![带change buffer的更新过程](https://fastly.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240506/image-image.73tra6jw4l.webp)
+![带change buffer的更新过程](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240506/image-image.73tra6jw4l.webp)
 
 ## 10 | MySQL 为什么有时候会选错索引？
 
