@@ -63,6 +63,22 @@ redo log 主要节省随机写磁盘的 IO 消耗（转为顺序写）；change 
 
 ![带change buffer的更新过程](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240506/image-image.73tra6jw4l.webp)
 
+### 异常重启是否会丢失 change buffer 和数据
+
+不会。事务在 commit 时，会把 change buffer 的操作记录到 redo log 中，因此在崩溃的时候，change buffer 也会找到原来的数据。
+
 ## 10 | MySQL 为什么有时候会选错索引？
 
 ### 优化器的逻辑
+
+优化器选择索引的标准有：扫描行数、是否使用临时表、是否排序等。
+
+如何判断扫描行数？根据索引的“区分度”去统计大概的扫描行数，区分度称为基数（cardinality），基数越大，区分度越好。
+
+MySQL 提供采样统计来得到索引的基数。由于采样统计，可能就会出现基数不正确的情况。同样优化器也需要考虑回表的代价。
+
+对于使用错误索引，可以参考以下方式：
+
+1. 使用`force index`来强行指定索引。
+2. 通过修改语句来引导优化器。
+3. 通过增加或者删除索引来绕过问题。
