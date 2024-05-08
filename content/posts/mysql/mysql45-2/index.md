@@ -102,6 +102,6 @@ MySQL 提供采样统计来得到索引的基数。由于采样统计，可能�
 ![锁表DDL流程](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240508/image-image.syrf4zgo5.webp)
 ![Online DDL流程](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240508/image-image.101zakltfr.webp)
 
-- alter table t engine = InnoDB（也就是 recreate）；
-- analyze table t 其实不是重建表，只是对表的索引信息做重新统计，没有修改数据，这个过程中加了 MDL 读锁；
-- optimize table t 等于 recreate+analyze。
+- `alter table t engine = InnoDB`（也就是 recreate）；
+- `analyze table t` 其实不是重建表，只是对表的索引信息做重新统计，没有修改数据，这个过程中加了 MDL 读锁；
+- `optimize table t` 等于 recreate+analyze。
