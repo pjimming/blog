@@ -105,3 +105,9 @@ MySQL 提供采样统计来得到索引的基数。由于采样统计，可能�
 - `alter table t engine = InnoDB`（也就是 recreate）；
 - `analyze table t` 其实不是重建表，只是对表的索引信息做重新统计，没有修改数据，这个过程中加了 MDL 读锁；
 - `optimize table t` 等于 recreate+analyze。
+
+## 14 | count(\*)这么慢，我该怎么办？
+
+InnoDB 获取表记录数量时，会选择扫描行数少的索引，把所有匹配的记录扫描出来。
+
+效率排序：$count(字段)<count(pk)<count(1)\approx count(*)$
