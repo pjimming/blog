@@ -113,3 +113,26 @@ InnoDB 获取表记录数量时，会选择扫描行数少的索引，把所有�
 可以使用额外的存储记录总数，推荐用上 InnoDB 的事务进行计数。
 
 效率排序：$count(字段)<count(pk)<count(1)\approx count(*)$
+
+## 15 | 答疑文章（一）：日志和索引相关问题
+
+### 如何判断 binlog 是否完整
+
+- statement 格式的 binlog，最后会有 commit
+- row 格式的 binlog，最后会有 XID event
+
+同时引入 binlog-checksum 验证内容的正确性。
+
+### redo log 和 binlog 如何关联
+
+它们有一个共同的数据字段，叫 XID。崩溃恢复的时候，会按顺序扫描 redo log：
+
+- 如果碰到既有 prepare、又有 commit 的 redo log，就直接提交；
+- 如果碰到只有 prepare、而没有 commit 的 redo log，就拿着 XID 去 binlog 找对应的事务。
+
+### 最终数据落盘，来自 redo log 还是 buffer pool
+
+redo log 并没有记录数据页的完整数据，所以它并没有能力自己去更新磁盘数据页
+
+1. 如果是正常运行的实例的话，数据页被修改以后，跟磁盘的数据页不一致，称为脏页。最终数据落盘，就是把内存中的数据页写盘。这个过程，甚至与 redo log 毫无关系。
+2. 在崩溃恢复场景中，InnoDB 如果判断到一个数据页可能在崩溃恢复的时候丢失了更新，就会将它读到内存，然后让 redo log 更新内存内容。更新完成后，内存页变成脏页，就回到了第一种情况的状态。
