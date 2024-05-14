@@ -62,3 +62,7 @@ ACM 败犬，野生 Gopher，北京西二旗打工人。
 我的白日梦：
 
 _带上快乐与相机，和喜欢的人走遍世界的角角落落。_
+
+## 关于工作
+
+![工作经历](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240515/image-image.5tqufwq0vv.webp)
