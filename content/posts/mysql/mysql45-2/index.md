@@ -13,8 +13,8 @@ images: []
 tags: [mysql, mysql实战45讲]
 categories: [mysql]
 
-featuredImage: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240504/image-image.8s347bmo8x.webp"
-featuredImagePreview: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240504/image-image.8s347bmo8x.webp"
+featuredImage: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240517/image-image.4xud44n5ua.webp"
+featuredImagePreview: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240517/image-image.4xud44n5ua.webp"
 
 outdatedInfoWarning: true
 ---
