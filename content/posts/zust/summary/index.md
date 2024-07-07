@@ -13,8 +13,8 @@ images: []
 tags: [blog, zust]
 categories: [blog]
 
-featuredImage: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240628/awd.3d4nrw67r3.webp"
-featuredImagePreview: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240628/awd.3d4nrw67r3.webp"
+featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240628/awd.3d4nrw67r3.webp"
+featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240628/awd.3d4nrw67r3.webp"
 
 outdatedInfoWarning: false
 ---

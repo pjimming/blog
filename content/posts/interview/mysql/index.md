@@ -13,8 +13,8 @@ images: []
 tags: [interview, mysql]
 categories: [interview]
 
-featuredImage: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/image.4qr2l18ab2.webp"
-featuredImagePreview: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/image.4qr2l18ab2.webp"
+featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.4qr2l18ab2.webp"
+featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.4qr2l18ab2.webp"
 
 outdatedInfoWarning: true
 ---
@@ -60,7 +60,7 @@ outdatedInfoWarning: true
 
 假设有两个事务 T1 和 T2，T1 在读取某个数据之后，T2 修改了该数据但尚未提交，如果 T1 再次读取该数据，就会读取到 T2 修改后的“脏数据”，因为 T2 的修改最终可能被回滚，导致读取到的数据不正确。
 
-![](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/image.3nrda66ljv.webp)
+![](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.3nrda66ljv.webp)
 
 #### 不可重复读
 
@@ -68,7 +68,7 @@ outdatedInfoWarning: true
 
 假设事务 T1 执行了一次查询并读取了某行数据，然后事务 T2 修改了该行数据并提交，如果 T1 再次执行相同的查询，得到的结果就可能与之前不同。
 
-![](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/image.5c0q7d95ts.webp)
+![](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.5c0q7d95ts.webp)
 
 #### 幻读
 
@@ -76,7 +76,7 @@ outdatedInfoWarning: true
 
 假设事务 T1 执行了一次查询并返回了一些行数据，然后事务 T2 在这些行数据中插入了新的数据并提交，如果 T1 再次执行相同的查询，得到的结果集就可能与之前不同。
 
-![](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/image.99t3o1koao.webp)
+![](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.99t3o1koao.webp)
 
 ### 默认隔离级别-RR
 
@@ -179,7 +179,7 @@ InnoDB 的 MVCC,是通过在每行记录后面保存系统版本号(可以理解
 
 #### Read View：
 
-![](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/image.5c0q7f8meb.webp)
+![](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.5c0q7f8meb.webp)
 
 Read View 有四个重要的字段：
 
@@ -192,7 +192,7 @@ Read View 有四个重要的字段：
 
 #### trx_id：
 
-![](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/image.7p3commubs.webp)
+![](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.7p3commubs.webp)
 
 一个事务去访问记录的时候，除了自己的更新记录总是可见之外，还有这几种情况：
 
@@ -267,7 +267,7 @@ CREATE [UNIQUE | FULLTEXT] INDEX 索引名 ON 表名(字段名) [USING 索引方
 select * from student  A where A.age='18' and A.name='张三';
 ```
 
-![](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/image.2a4u67odm9.webp)
+![](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.2a4u67odm9.webp)
 
 结合上面的说明，我们分析下这个语句的执行流程：
 
@@ -358,7 +358,7 @@ limit 10;
 
 ### JOIN 查询
 
-![](https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/image.3ye73f862e.webp)
+![](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/image.3ye73f862e.webp)
 
 `left join`(左联接) 返回包括左表中的所有记录和右表中关联字段相等的记录
 

@@ -13,8 +13,8 @@ images: []
 tags: [算法, 树状数组, 数据结构, ACM]
 categories: [ACM]
 
-featuredImage: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp"
-featuredImagePreview: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp"
+featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp"
+featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp"
 
 outdatedInfoWarning: true
 ---

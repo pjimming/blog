@@ -13,8 +13,8 @@ images: []
 tags: [redis, golang, 实战]
 categories: [redis]
 
-featuredImage: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240326/image-image.969ibnzd46.webp"
-featuredImagePreview: "https://www.jsdelivr.ren/gh/pjimming/picx-images-hosting@master/20240326/image-image.969ibnzd46.webp"
+featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240326/image-image.969ibnzd46.webp"
+featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240326/image-image.969ibnzd46.webp"
 
 outdatedInfoWarning: true
 ---
