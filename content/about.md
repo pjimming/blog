@@ -57,7 +57,7 @@ Static CDN：[jsDelivr](https://www.jsdelivr.com/)
 
 ACM 败犬，野生 Gopher，帝都西二旗打工人。
 
-爱好：编程，美女。
+爱好：自驾游，编程，美女。
 
 我的白日梦：
 
