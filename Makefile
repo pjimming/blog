@@ -18,3 +18,7 @@ featured:
 submodule:
 	@git submodule update --init --recursive
 	@git submodule update --recursive --remote
+
+gh-pages:
+	@hugo --gc --minify
+	@git subtree push --prefix=public origin gh-pages

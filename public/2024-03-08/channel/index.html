@@ -1,0 +1,484 @@
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>深入理解Go语言的Channel - 江明说|Jimmy Talk</title><meta name=Description content="江明说"><meta property="og:url" content="https://blog.pjmcode.top/2024-03-08/channel/">
+<meta property="og:site_name" content="江明说|Jimmy Talk"><meta property="og:title" content="深入理解Go语言的Channel"><meta property="og:description" content="介绍 Golang 中的 channel 是什么，如何使用以及一些 channel 的使用例子"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-03-08T20:50:19+08:00"><meta property="article:modified_time" content="2024-03-09T12:31:48+08:00"><meta property="article:tag" content="Golang"><meta property="article:tag" content="Channel"><meta property="og:image" content="https://blog.pjmcode.top/2024-03-08/channel/featured-image.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://blog.pjmcode.top/2024-03-08/channel/featured-image.png"><meta name=twitter:title content="深入理解Go语言的Channel"><meta name=twitter:description content="介绍 Golang 中的 channel 是什么，如何使用以及一些 channel 的使用例子"><meta name=application-name content="江明说"><meta name=apple-mobile-web-app-title content="江明说"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://blog.pjmcode.top/2024-03-08/channel/><link rel=prev href=https://blog.pjmcode.top/2024-03-06/zombie/><link rel=next href=https://blog.pjmcode.top/2024-03-09/build-0/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=/lib/fontawesome-free/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.css></noscript><link rel=preload href=/lib/animate/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"深入理解Go语言的Channel","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/blog.pjmcode.top\/2024-03-08\/channel\/"},"genre":"posts","keywords":"golang, channel","wordcount":2744,"url":"https:\/\/blog.pjmcode.top\/2024-03-08\/channel\/","datePublished":"2024-03-08T20:50:19+08:00","dateModified":"2024-03-09T12:31:48+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"PanJM"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="江明说|Jimmy Talk"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/images/favicon.ico data-srcset="/images/favicon.ico, /images/favicon.ico 1.5x, /images/favicon.ico 2x" data-sizes=auto alt=/images/favicon.ico title=/images/favicon.ico>Jimmy Talk</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/><i class='fa-solid fa-box-archive'></i> 所有文章 </a><a class=menu-item href=/tags/><i class='fa-solid fa-tag'></i> 标签 </a><a class=menu-item href=/categories/><i class='fa-solid fa-table-list'></i> 分类 </a><a class=menu-item href=/friend/><i class='fa-solid fa-user-group'></i> 友链 </a><a class=menu-item href=/book-list/><i class='fa-solid fa-book'></i> 书单 </a><a class=menu-item href=/about/><i class='fa-regular fa-address-card'></i> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i>
+</span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="江明说|Jimmy Talk"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/images/favicon.ico data-srcset="/images/favicon.ico, /images/favicon.ico 1.5x, /images/favicon.ico 2x" data-sizes=auto alt=/images/favicon.ico title=/images/favicon.ico>Jimmy Talk</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title><i class='fa-solid fa-box-archive'></i>所有文章</a><a class=menu-item href=/tags/ title><i class='fa-solid fa-tag'></i>标签</a><a class=menu-item href=/categories/ title><i class='fa-solid fa-table-list'></i>分类</a><a class=menu-item href=/friend/ title><i class='fa-solid fa-user-group'></i>友链</a><a class=menu-item href=/book-list/ title><i class='fa-solid fa-book'></i>书单</a><a class=menu-item href=/about/ title><i class='fa-regular fa-address-card'></i>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">深入理解Go语言的Channel</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://github.com/pjimming/ title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>PanJM</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/golang/><i class="far fa-folder fa-fw" aria-hidden=true></i>Golang</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-03-08>2024-03-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 2744 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 6 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/2024-03-08/channel/featured-image.png data-srcset="/2024-03-08/channel/featured-image.png, /2024-03-08/channel/featured-image.png 1.5x, /2024-03-08/channel/featured-image.png 2x" data-sizes=auto alt=/2024-03-08/channel/featured-image.png title=/2024-03-08/channel/featured-image.png width=1920 height=1080></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#什么是-channel>什么是 channel</a></li><li><a href=#channel-的基本使用>channel 的基本使用</a><ul><li><a href=#创建-channel>创建 channel</a></li><li><a href=#向-channel-里写数据>向 channel 里写数据</a></li><li><a href=#从-channel-里读数据>从 channel 里读数据</a></li><li><a href=#关闭-channel>关闭 channel</a></li></ul></li><li><a href=#channel-场景分析>channel 场景分析</a></li><li><a href=#channel-使用例子>channel 使用例子</a><ul><li><a href=#使用-for-range-读-channel>使用 for-range 读 channel</a></li><li><a href=#使用vok---ch--select操作判断-channel-是否关闭>使用<code>v,ok := &lt;-ch</code> + <code>select</code>操作判断 channel 是否关闭</a></li><li><a href=#使用-select-处理多个-channel>使用 select 处理多个 channel</a></li><li><a href=#使用-channel-的声明控制读写权限>使用 channel 的声明控制读写权限</a></li><li><a href=#为操作加上超时>为操作加上超时</a></li><li><a href=#使用-time-实现-channel-无阻塞读写>使用 time 实现 channel 无阻塞读写</a></li><li><a href=#无缓冲-channel>无缓冲 channel</a></li><li><a href=#有缓冲-channel>有缓冲 channel</a></li><li><a href=#与-select-配合>与 select 配合</a></li></ul></li></ul></nav></div></div><div class=content id=content><div class="details admonition warning open"><div class="details-summary admonition-title"><i class="icon fas fa-exclamation-triangle fa-fwwarning"></i>警告<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content><span>这篇文章最后修改于</span>
+<span class=timeago datetime=2024-03-09T12:31:48 title="March 9, 2024">March 9, 2024</span>
+<span>，请鉴别其时效性，以免造成不必要的麻烦。</span></div></div></div><p>介绍 Golang 中的 channel 是什么，如何使用以及一些 channel 的使用例子</p><hr><h2 id=什么是-channel>什么是 channel</h2><p>channel(一般简写为 <code>chan</code>) 管道提供了一种机制，它是一种类型，类似于队列或管道，可以用于在 goroutine 之间传递数据。</p><p>此外，channel 是<strong>并发安全</strong>的。</p><h2 id=channel-的基本使用>channel 的基本使用</h2><p>通信操作符 &lt;- 的箭头指示数据流向，箭头指向哪里，数据就流向哪里，它是一个二元操作符，可以支持任意类型。</p><h3 id=创建-channel>创建 channel</h3><p>channel 有两种类型，区分类型为<strong>无缓冲</strong>与<strong>有缓冲</strong>。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// 无缓冲channel，同步channel，缓冲区大小为0，即必须有同步协程进行读写操作
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>ch</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=nx>T</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>// 有缓冲channel，异步channel，缓冲区大小为10，即channel里最多有10个元素
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>ch</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=nx>T</span><span class=p>,</span> <span class=mi>10</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=向-channel-里写数据>向 channel 里写数据</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>ch</span> <span class=o>&lt;-</span> <span class=nx>data</span> <span class=c1>// 向channel内写入data的数据
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=从-channel-里读数据>从 channel 里读数据</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// 从 channel 中接收数据并赋值给 data
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>data</span> <span class=o>:=</span> <span class=o>&lt;-</span><span class=nx>ch</span>
+</span></span><span class=line><span class=cl><span class=c1>// 从 channel 中接收数据并丢弃
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=o>&lt;-</span><span class=nx>ch</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=关闭-channel>关闭 channel</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nb>close</span><span class=p>(</span><span class=nx>ch</span><span class=p>)</span> <span class=c1>// 用于关闭一个channel
+</span></span></span></code></pre></td></tr></table></div></div><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>关闭channel时，需要注意以下细节<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><ol><li>读取关闭后的<strong>无缓存</strong>通道，不管通道中是否有数据，返回值都为 <code>0</code> 和 <code>false</code></li><li>读取关闭后的<strong>有缓存</strong>通道，将缓存数据读取完后，再读取返回值为 <code>0</code> 和 <code>false</code></li><li>对于一个关闭的 channel，如果继续向 channel 发送数据，会引起 panic</li><li>channel 不能 close 两次，多次 close 会 panic</li></ol></div></div></div><h2 id=channel-场景分析>channel 场景分析</h2><table><thead><tr><th></th><th>写操作：<code>ch&lt;-</code></th><th>读操作：<code>&lt;-ch</code></th><th>关闭操作：<code>close(ch)</code></th></tr></thead><tbody><tr><td>channel 为<code>nil</code></td><td>阻塞</td><td>阻塞</td><td><code>panic</code></td></tr><tr><td><strong>无缓冲</strong>的 channel</td><td>阻塞，除非有其他协程同时读</td><td>阻塞，除非有其他协程同时写</td><td>成功</td></tr><tr><td><strong>有缓冲</strong>的 channel</td><td>成功，直到缓冲区满时阻塞</td><td>成功，除非缓冲区为空时阻塞</td><td>成功</td></tr><tr><td>已经<code>close</code>的 channel</td><td><code>panic</code></td><td>读出缓冲区内存在的内容，后续只能读到类型的零值，可以根据断言判断是否获取到数据</td><td><code>panic</code></td></tr></tbody></table><h2 id=channel-使用例子>channel 使用例子</h2><h3 id=使用-for-range-读-channel>使用 for-range 读 channel</h3><p>适合场景：需要不断的从 channel 里读取数据</p><p>使用<code>for-range</code>读取 channel，这样既安全又便利，当 channel 关闭时，for 循环会自动退出，无需主动监测 channel 是否关闭，可以防止读取已经关闭的 channel，造成读到数据为通道所存储的数据类型的零值。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=k>for</span> <span class=nx>x</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>ch</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=使用vok---ch--select操作判断-channel-是否关闭>使用<code>v,ok := &lt;-ch</code> + <code>select</code>操作判断 channel 是否关闭</h3><p>ok 的结果和含义：</p><ul><li><code>true</code>：读到通道数据，不确定是否关闭，可能 channel 还有保存的数据，但 channel 已关闭。</li><li><code>false</code>：通道关闭，无数据读到。</li></ul><p>从关闭的 channel 读值读到是 channel 所传递数据类型的零值，这个零值有可能是发送者发送的，也可能是 channel 关闭了。</p><p><code>_, ok := &lt;-ch</code>与 select 配合使用的，当 ok 为 false 时，代表了 channel 已经 close。下面解释原因，<code>&lt;span> &lt;/span>_,ok := &lt;-ch</code>对应的函数是<code>func chanrecv(c *hchan, ep unsafe.Pointer, block bool) (selected, received bool)</code>，入参 block 含义是当前 goroutine 是否可阻塞，当 block 为 false 代表的是 select 操作，不可阻塞当前 goroutine 的在 channel 操作，否则是普通操作（即<code>_, ok</code>不在 select 中）。返回值 selected 代表当前操作是否成功，主要为 select 服务，返回<strong>received 代表是否从 channel 读到有效值</strong>。它有 3 种返回值情况：</p><ol><li>block 为 false，即执行 select 时，如果 channel 为空，返回(false,false)，代表 select 操作失败，没接收到值。</li><li>否则，如果 channel 已经关闭，并且没有数据，ep 即接收数据的变量设置为零值，返回(true,false)，代表 select 操作成功，但 channel 已关闭，没读到有效值。</li><li>否则，其他读到有效数据的情况，返回(true,ture)。</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>ch</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kt>int</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// 发送1个数据关闭channel
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>ch</span> <span class=o>&lt;-</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>	<span class=nb>close</span><span class=p>(</span><span class=nx>ch</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nb>print</span><span class=p>(</span><span class=s>&#34;close channel\n&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// 不停读数据直到channel没有有效数据
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>for</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>select</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=nx>v</span><span class=p>,</span> <span class=nx>ok</span> <span class=o>:=</span> <span class=o>&lt;-</span><span class=nx>ch</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>			<span class=nb>print</span><span class=p>(</span><span class=s>&#34;v: &#34;</span><span class=p>,</span> <span class=nx>v</span><span class=p>,</span> <span class=s>&#34;, ok:&#34;</span><span class=p>,</span> <span class=nx>ok</span><span class=p>,</span> <span class=s>&#34;\n&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>			<span class=k>if</span> <span class=p>!</span><span class=nx>ok</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>				<span class=nb>print</span><span class=p>(</span><span class=s>&#34;channel is close\n&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>				<span class=k>return</span>
+</span></span><span class=line><span class=cl>			<span class=p>}</span>
+</span></span><span class=line><span class=cl>		<span class=k>default</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>			<span class=nb>print</span><span class=p>(</span><span class=s>&#34;nothing\n&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// output:
+</span></span></span><span class=line><span class=cl><span class=c1>// close channel
+</span></span></span><span class=line><span class=cl><span class=c1>// v: 1, ok:true
+</span></span></span><span class=line><span class=cl><span class=c1>// v: 0, ok:false
+</span></span></span><span class=line><span class=cl><span class=c1>// channel is close
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=使用-select-处理多个-channel>使用 select 处理多个 channel</h3><p>适合场景：需要对多个通道进行同时处理，但只处理最先发生的 channel 时</p><p><code>select</code>可以同时监控多个通道的情况，只处理未阻塞的 case。<strong>当通道为 nil 时，对应的 case 永远为阻塞，无论读写。特殊关注：普通情况下，对 nil 的通道写操作是要 panic 的</strong>。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// 分配job时，如果收到关闭的通知则退出，不分配job
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>func</span> <span class=p>(</span><span class=nx>h</span> <span class=o>*</span><span class=nx>Handler</span><span class=p>)</span> <span class=nf>handle</span><span class=p>(</span><span class=nx>job</span> <span class=o>*</span><span class=nx>Job</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>select</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=nx>h</span><span class=p>.</span><span class=nx>jobCh</span><span class=o>&lt;-</span><span class=nx>job</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=o>&lt;-</span><span class=nx>h</span><span class=p>.</span><span class=nx>stopCh</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=使用-channel-的声明控制读写权限>使用 channel 的声明控制读写权限</h3><p>适合场景：协程对某个通道只读或只写时</p><p>目的：</p><ol><li>使代码更易读、更易维护，</li><li>防止只读协程对通道进行写数据，但通道已关闭，造成 panic。</li></ol><p>用法：</p><ul><li>如果协程对某个 channel 只有写操作，则这个 channel 声明为只写。</li><li>如果协程对某个 channel 只有读操作，则这个 channe 声明为只读。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// 只有generator进行对outCh进行写操作，返回声明
+</span></span></span><span class=line><span class=cl><span class=c1>// &lt;-chan int，可以防止其他协程乱用此通道，造成隐藏bug
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>func</span> <span class=nf>generator</span><span class=p>(</span><span class=kt>int</span> <span class=nx>n</span><span class=p>)</span> <span class=o>&lt;-</span><span class=kd>chan</span> <span class=kt>int</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>outCh</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kt>int</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>go</span> <span class=kd>func</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=nx>i</span><span class=o>:=</span><span class=mi>0</span><span class=p>;</span><span class=nx>i</span><span class=p>&lt;</span><span class=nx>n</span><span class=p>;</span><span class=nx>i</span><span class=o>++</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>outCh</span><span class=o>&lt;-</span><span class=nx>i</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}()</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>outCh</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// consumer只读inCh的数据，声明为&lt;-chan int
+</span></span></span><span class=line><span class=cl><span class=c1>// 可以防止它向inCh写数据
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>func</span> <span class=nf>consumer</span><span class=p>(</span><span class=nx>inCh</span> <span class=o>&lt;-</span><span class=kd>chan</span> <span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=nx>x</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>inCh</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=为操作加上超时>为操作加上超时</h3><p>适用场景：需要超时控制的操作</p><p>使用<code>select</code>和<code>time.After</code>，看操作和定时器哪个先返回，处理先完成的，就达到了超时控制的效果</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span> <span class=nf>doWithTimeOut</span><span class=p>(</span><span class=nx>timeout</span> <span class=nx>time</span><span class=p>.</span><span class=nx>Duration</span><span class=p>)</span> <span class=p>(</span><span class=kt>int</span><span class=p>,</span> <span class=kt>error</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>select</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>case</span> <span class=nx>ret</span> <span class=o>:=</span> <span class=o>&lt;-</span><span class=nf>do</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=nx>ret</span><span class=p>,</span> <span class=kc>nil</span>
+</span></span><span class=line><span class=cl>	<span class=k>case</span> <span class=o>&lt;-</span><span class=nx>time</span><span class=p>.</span><span class=nf>After</span><span class=p>(</span><span class=nx>timeout</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=mi>0</span><span class=p>,</span> <span class=nx>errors</span><span class=p>.</span><span class=nf>New</span><span class=p>(</span><span class=s>&#34;timeout&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>do</span><span class=p>()</span> <span class=o>&lt;-</span><span class=kd>chan</span> <span class=kt>int</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>outCh</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kt>int</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>go</span> <span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=c1>// do work
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=p>}()</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>outCh</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=使用-time-实现-channel-无阻塞读写>使用 time 实现 channel 无阻塞读写</h3><p>场景：并不希望在 channel 的读写上浪费时间</p><p>是为操作加上超时的扩展，这里的操作是 channel 的读或写</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// time.After等待可以替换为default，则是channel阻塞时，立即返回的效果
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>func</span> <span class=nf>unBlockRead</span><span class=p>(</span><span class=nx>ch</span> <span class=kd>chan</span> <span class=kt>int</span><span class=p>)</span> <span class=p>(</span><span class=nx>x</span> <span class=kt>int</span><span class=p>,</span> <span class=nx>err</span> <span class=kt>error</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>select</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>case</span> <span class=nx>x</span> <span class=p>=</span> <span class=o>&lt;-</span><span class=nx>ch</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=nx>x</span><span class=p>,</span> <span class=kc>nil</span>
+</span></span><span class=line><span class=cl>	<span class=k>case</span> <span class=o>&lt;-</span><span class=nx>time</span><span class=p>.</span><span class=nf>After</span><span class=p>(</span><span class=nx>time</span><span class=p>.</span><span class=nx>Microsecond</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=mi>0</span><span class=p>,</span> <span class=nx>errors</span><span class=p>.</span><span class=nf>New</span><span class=p>(</span><span class=s>&#34;read time out&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>unBlockWrite</span><span class=p>(</span><span class=nx>ch</span> <span class=kd>chan</span> <span class=kt>int</span><span class=p>,</span> <span class=nx>x</span> <span class=kt>int</span><span class=p>)</span> <span class=p>(</span><span class=nx>err</span> <span class=kt>error</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>select</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>case</span> <span class=nx>ch</span> <span class=o>&lt;-</span> <span class=nx>x</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=kc>nil</span>
+</span></span><span class=line><span class=cl>	<span class=k>case</span> <span class=o>&lt;-</span><span class=nx>time</span><span class=p>.</span><span class=nf>After</span><span class=p>(</span><span class=nx>time</span><span class=p>.</span><span class=nx>Microsecond</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=nx>errors</span><span class=p>.</span><span class=nf>New</span><span class=p>(</span><span class=s>&#34;read time out&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=无缓冲-channel>无缓冲 channel</h3><ol><li><p>可用于协程间同步</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>goroutine1</span><span class=p>(</span><span class=nx>ch</span> <span class=kd>chan</span><span class=o>&lt;-</span> <span class=kt>bool</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Goroutine 1 is doing something&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nx>ch</span> <span class=o>&lt;-</span> <span class=kc>true</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>goroutine2</span><span class=p>(</span><span class=nx>ch</span> <span class=o>&lt;-</span><span class=kd>chan</span> <span class=kt>bool</span><span class=p>,</span> <span class=nx>exit</span> <span class=kd>chan</span><span class=o>&lt;-</span> <span class=kd>struct</span><span class=p>{})</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;-</span><span class=nx>ch</span>
+</span></span><span class=line><span class=cl>    <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Goroutine 2 received data&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nx>exit</span> <span class=o>&lt;-</span> <span class=kd>struct</span><span class=p>{}{}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>ch</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kt>bool</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nx>exit</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kd>struct</span><span class=p>{})</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>go</span> <span class=nf>goroutine1</span><span class=p>(</span><span class=nx>ch</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>go</span> <span class=nf>goroutine2</span><span class=p>(</span><span class=nx>ch</span><span class=p>,</span> <span class=nx>exit</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;-</span><span class=nx>exit</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// output:
+</span></span></span><span class=line><span class=cl><span class=c1>// Goroutine 1 is doing something
+</span></span></span><span class=line><span class=cl><span class=c1>// Goroutine 2 received data
+</span></span></span></code></pre></td></tr></table></div></div></li></ol><h3 id=有缓冲-channel>有缓冲 channel</h3><ol><li><p>生产者-消费者模型</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;time&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>producer</span><span class=p>(</span><span class=nx>ch</span> <span class=kd>chan</span><span class=o>&lt;-</span> <span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=mi>5</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>ch</span> <span class=o>&lt;-</span> <span class=nx>i</span>
+</span></span><span class=line><span class=cl>		<span class=nx>time</span><span class=p>.</span><span class=nf>Sleep</span><span class=p>(</span><span class=nx>time</span><span class=p>.</span><span class=nx>Second</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=nb>close</span><span class=p>(</span><span class=nx>ch</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>consumer</span><span class=p>(</span><span class=nx>ch</span> <span class=o>&lt;-</span><span class=kd>chan</span> <span class=kt>int</span><span class=p>,</span> <span class=nx>exit</span> <span class=kd>chan</span><span class=o>&lt;-</span> <span class=kd>struct</span><span class=p>{})</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>num</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>ch</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Received:&#34;</span><span class=p>,</span> <span class=nx>num</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=nx>exit</span> <span class=o>&lt;-</span> <span class=kd>struct</span><span class=p>{}{}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>ch</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kt>int</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>exit</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kd>struct</span><span class=p>{})</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>defer</span> <span class=nb>close</span><span class=p>(</span><span class=nx>exit</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>go</span> <span class=nf>producer</span><span class=p>(</span><span class=nx>ch</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>go</span> <span class=nf>consumer</span><span class=p>(</span><span class=nx>ch</span><span class=p>,</span> <span class=nx>exit</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=o>&lt;-</span><span class=nx>exit</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// output:
+</span></span></span><span class=line><span class=cl><span class=c1>// Received: 0
+</span></span></span><span class=line><span class=cl><span class=c1>// Received: 1
+</span></span></span><span class=line><span class=cl><span class=c1>// Received: 2
+</span></span></span><span class=line><span class=cl><span class=c1>// Received: 3
+</span></span></span><span class=line><span class=cl><span class=c1>// Received: 4
+</span></span></span></code></pre></td></tr></table></div></div></li><li><p>协程池：控制并发数量</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;time&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>worker</span><span class=p>(</span><span class=nx>id</span> <span class=kt>int</span><span class=p>,</span> <span class=nx>jobs</span> <span class=o>&lt;-</span><span class=kd>chan</span> <span class=kt>int</span><span class=p>,</span> <span class=nx>results</span> <span class=kd>chan</span><span class=o>&lt;-</span> <span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>job</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>jobs</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;Worker %d started job %d\n&#34;</span><span class=p>,</span> <span class=nx>id</span><span class=p>,</span> <span class=nx>job</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=nx>time</span><span class=p>.</span><span class=nf>Sleep</span><span class=p>(</span><span class=nx>time</span><span class=p>.</span><span class=nx>Second</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;Worker %d finished job %d\n&#34;</span><span class=p>,</span> <span class=nx>id</span><span class=p>,</span> <span class=nx>job</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=nx>results</span> <span class=o>&lt;-</span> <span class=nx>job</span> <span class=o>*</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>numJobs</span> <span class=o>:=</span> <span class=mi>5</span>
+</span></span><span class=line><span class=cl>	<span class=nx>numWorkers</span> <span class=o>:=</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>jobs</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kt>int</span><span class=p>,</span> <span class=nx>numJobs</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>results</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kt>int</span><span class=p>,</span> <span class=nx>numJobs</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>w</span> <span class=o>:=</span> <span class=mi>1</span><span class=p>;</span> <span class=nx>w</span> <span class=o>&lt;=</span> <span class=nx>numWorkers</span><span class=p>;</span> <span class=nx>w</span><span class=o>++</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>go</span> <span class=nf>worker</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>jobs</span><span class=p>,</span> <span class=nx>results</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>j</span> <span class=o>:=</span> <span class=mi>1</span><span class=p>;</span> <span class=nx>j</span> <span class=o>&lt;=</span> <span class=nx>numJobs</span><span class=p>;</span> <span class=nx>j</span><span class=o>++</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>jobs</span> <span class=o>&lt;-</span> <span class=nx>j</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=nb>close</span><span class=p>(</span><span class=nx>jobs</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>r</span> <span class=o>:=</span> <span class=mi>1</span><span class=p>;</span> <span class=nx>r</span> <span class=o>&lt;=</span> <span class=nx>numJobs</span><span class=p>;</span> <span class=nx>r</span><span class=o>++</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=o>&lt;-</span><span class=nx>results</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// output:
+</span></span></span><span class=line><span class=cl><span class=c1>// Worker 3 started job 1
+</span></span></span><span class=line><span class=cl><span class=c1>// Worker 1 started job 2
+</span></span></span><span class=line><span class=cl><span class=c1>// Worker 2 started job 3
+</span></span></span><span class=line><span class=cl><span class=c1>// Worker 2 finished job 3
+</span></span></span><span class=line><span class=cl><span class=c1>// Worker 2 started job 4
+</span></span></span><span class=line><span class=cl><span class=c1>// Worker 3 finished job 1
+</span></span></span><span class=line><span class=cl><span class=c1>// Worker 3 started job 5
+</span></span></span><span class=line><span class=cl><span class=c1>// Worker 1 finished job 2
+</span></span></span><span class=line><span class=cl><span class=c1>// Worker 2 finished job 4
+</span></span></span><span class=line><span class=cl><span class=c1>// Worker 3 finished job 5
+</span></span></span></code></pre></td></tr></table></div></div></li></ol><h3 id=与-select-配合>与 select 配合</h3><ol><li><p>避免协程泄漏</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>finish</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kd>struct</span><span class=p>{})</span>
+</span></span><span class=line><span class=cl><span class=k>defer</span> <span class=nb>close</span><span class=p>(</span><span class=nx>finish</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>go</span> <span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=o>...</span>
+</span></span><span class=line><span class=cl>    <span class=k>select</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=o>&lt;-</span><span class=nx>finish</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// avoid goroutine memory leak
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=o>...</span> <span class=nx>your</span> <span class=nx>code</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span>
+</span></span><span class=line><span class=cl>    <span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=p>}()</span>
+</span></span></code></pre></td></tr></table></div></div><p>上述代码中，<code>finish chan</code> 一直被阻塞读出，父协程退出时，<code>defer</code> 执行，此时 channel 关闭，读操作不再收到阻塞，通过 <code>select</code> 轮询即可退出子协程，避免协程的内存泄漏。</p></li></ol></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2024-03-09&nbsp;<a class=git-hash href=https://github.com/pjimming/blog/commit/2a04775fb446df154e2d7d01eef948122d333dcb target=_blank title="commit by pjm(2556323541@qq.com) 2a04775fb446df154e2d7d01eef948122d333dcb: update title">
+<i class="fas fa-hashtag fa-fw" aria-hidden=true></i>2a04775</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/2024-03-08/channel/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://blog.pjmcode.top/2024-03-08/channel/ data-title=深入理解Go语言的Channel data-hashtags=golang,channel><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://blog.pjmcode.top/2024-03-08/channel/ data-hashtag=golang><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Hacker News" data-sharer=hackernews data-url=https://blog.pjmcode.top/2024-03-08/channel/ data-title=深入理解Go语言的Channel><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://blog.pjmcode.top/2024-03-08/channel/ data-title=深入理解Go语言的Channel><i data-svg-src=/lib/simple-icons/icons/line.min.svg aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://blog.pjmcode.top/2024-03-08/channel/ data-title=深入理解Go语言的Channel data-image=featured-image.png><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/golang/>Golang</a>,&nbsp;<a href=/tags/channel/>Channel</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/2024-03-06/zombie/ class=prev rel=prev title=Linux系统中僵尸进程的二三事><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>Linux系统中僵尸进程的二三事</a>
+<a href=/2024-03-09/build-0/ class=next rel=next title="零成本搭建个人博客系列--第一篇 为什么选择Hugo？">零成本搭建个人博客系列--第一篇 为什么选择Hugo？<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=giscus class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app>Giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><span id=run-time></span></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://github.com/pjimming/ target=_blank>潘江明</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=备案编号" target=_blank>浙ICP备2024074882号</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/lightgallery/css/lightgallery-bundle.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/contrib/auto-render.min.js></script><script type=text/javascript src=/lib/katex/contrib/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{giscus:{category:"Announcements",categoryId:"DIC_kwDOLZmgDc4Cdm7x",darkTheme:"preferred_color_scheme",emitMetadata:"0",inputPosition:"top",lang:"zh-CN",lazyLoading:!1,lightTheme:"light",mapping:"pathname",reactionsEnabled:"1",repo:"pjimming/blog-comment",repoId:"R_kgDOLZmgDQ"}},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",lunrLanguageCode:"zh",lunrSegmentitURL:"/lib/lunr/lunr.segmentit.js",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.staticfile.net/jquery/2.2.4/jquery.min.js></script><script type=text/javascript src=/js/custom.js></script></body></html>
