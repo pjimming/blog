@@ -28,6 +28,6 @@ jobs:
               with:
                   PERSONAL_TOKEN: ${{ secrets.MY_BLOG }}
                   EXTERNAL_REPOSITORY: pjimming/blog
-                  PUBLISH_BRANCH: main
+                  PUBLISH_BRANCH: gh-pages
                   PUBLISH_DIR: ./public
                   commit_message: ${{ github.event.head_commit.message }}
