@@ -1,0 +1,304 @@
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>深入浅出理解树状数组 - 江明说|Jimmy Talk</title><meta name=Description content="江明说"><meta property="og:url" content="https://blog.pjmcode.top/2024-03-19/fenwick/">
+<meta property="og:site_name" content="江明说|Jimmy Talk"><meta property="og:title" content="深入浅出理解树状数组"><meta property="og:description" content="讲解树状数组的实现原理以及使用例子"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-03-19T11:19:40+08:00"><meta property="article:modified_time" content="2024-07-07T10:07:16+08:00"><meta property="article:tag" content="算法"><meta property="article:tag" content="树状数组"><meta property="article:tag" content="数据结构"><meta property="article:tag" content="ACM"><meta property="og:image" content="https://blog.pjmcode.top/logo.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://blog.pjmcode.top/logo.png"><meta name=twitter:title content="深入浅出理解树状数组"><meta name=twitter:description content="讲解树状数组的实现原理以及使用例子"><meta name=application-name content="江明说"><meta name=apple-mobile-web-app-title content="江明说"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://blog.pjmcode.top/2024-03-19/fenwick/><link rel=prev href=https://blog.pjmcode.top/2024-03-18/2024-01/><link rel=next href=https://blog.pjmcode.top/2024-03-20/photomaker/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=/lib/fontawesome-free/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.css></noscript><link rel=preload href=/lib/animate/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"深入浅出理解树状数组","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/blog.pjmcode.top\/2024-03-19\/fenwick\/"},"genre":"posts","keywords":"算法, 树状数组, 数据结构, ACM","wordcount":1937,"url":"https:\/\/blog.pjmcode.top\/2024-03-19\/fenwick\/","datePublished":"2024-03-19T11:19:40+08:00","dateModified":"2024-07-07T10:07:16+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"PanJM"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="江明说|Jimmy Talk"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/images/favicon.ico data-srcset="/images/favicon.ico, /images/favicon.ico 1.5x, /images/favicon.ico 2x" data-sizes=auto alt=/images/favicon.ico title=/images/favicon.ico>Jimmy Talk</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/><i class='fa-solid fa-box-archive'></i> 所有文章 </a><a class=menu-item href=/tags/><i class='fa-solid fa-tag'></i> 标签 </a><a class=menu-item href=/categories/><i class='fa-solid fa-table-list'></i> 分类 </a><a class=menu-item href=/friend/><i class='fa-solid fa-user-group'></i> 友链 </a><a class=menu-item href=/book-list/><i class='fa-solid fa-book'></i> 书单 </a><a class=menu-item href=/about/><i class='fa-regular fa-address-card'></i> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i>
+</span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="江明说|Jimmy Talk"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/images/favicon.ico data-srcset="/images/favicon.ico, /images/favicon.ico 1.5x, /images/favicon.ico 2x" data-sizes=auto alt=/images/favicon.ico title=/images/favicon.ico>Jimmy Talk</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title><i class='fa-solid fa-box-archive'></i>所有文章</a><a class=menu-item href=/tags/ title><i class='fa-solid fa-tag'></i>标签</a><a class=menu-item href=/categories/ title><i class='fa-solid fa-table-list'></i>分类</a><a class=menu-item href=/friend/ title><i class='fa-solid fa-user-group'></i>友链</a><a class=menu-item href=/book-list/ title><i class='fa-solid fa-book'></i>书单</a><a class=menu-item href=/about/ title><i class='fa-regular fa-address-card'></i>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">深入浅出理解树状数组</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://github.com/pjimming/ title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>PanJM</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/acm/><i class="far fa-folder fa-fw" aria-hidden=true></i>ACM</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-03-19>2024-03-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 1937 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 4 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp data-srcset="https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp, https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp 1.5x, https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp 2x" data-sizes=auto alt=https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp title=https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#引入问题>引入问题</a><ul><li><a href=#朴素算法>朴素算法</a></li><li><a href=#使用树状数组>使用树状数组</a></li></ul></li><li><a href=#前置知识>前置知识</a><ul><li><a href=#举例说明>举例说明：</a></li><li><a href=#函数实现>函数实现：</a></li></ul></li><li><a href=#树状数组思想>树状数组思想</a></li><li><a href=#树状数组操作>树状数组操作</a><ul><li><a href=#addx-k表示将序列中第-x-个数加上-k><code>add(x, k)</code>表示将序列中第 x 个数加上 k</a></li><li><a href=#sumx-表示将查询序列前-x-个数的和><code>sum(x)</code> 表示将查询序列前 x 个数的和</a></li></ul></li><li><a href=#树状数组核心代码>树状数组核心代码</a></li><li><a href=#区间修改单点查询>区间修改，单点查询</a><ul><li><a href=#差分>差分</a></li><li><a href=#代码>代码</a></li></ul></li><li><a href=#逆序对>逆序对</a><ul><li><a href=#离散化discretization>离散化(Discretization)</a></li><li><a href=#树状数组求和>树状数组求和</a></li><li><a href=#代码-1>代码</a></li></ul></li></ul></nav></div></div><div class=content id=content><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fwnote"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content><span>这篇文章最后修改于</span>
+<span class=timeago datetime=2024-07-07T10:07:16 title="July 7, 2024">July 7, 2024</span>
+<span>，请鉴别其时效性，以免造成不必要的麻烦。</span></div></div></div><p>讲解树状数组的实现原理以及使用例子</p><hr><h2 id=引入问题>引入问题</h2><p>给出一个长度为 $n$ 的数组，完成以下两种操作：</p><ol><li>将第 $i$ 个数加上 $k$</li><li>输出区间 $[i,j]$ 内每个数的和</li></ol><h3 id=朴素算法>朴素算法</h3><ul><li>单点修改：$O(1)$</li><li>区间查询：$O(n)$</li></ul><h3 id=使用树状数组>使用树状数组</h3><ul><li>单点修改：$O(\log n)$</li><li>区间查询：$O(\log n)$</li></ul><h2 id=前置知识>前置知识</h2><p><code>lowbit()</code>运算：非负整数 $x$ 在二进制表示下最低位 $1$ 及其后面的 $0$ 构成的数值。</p><h3 id=举例说明>举例说明：</h3><p>$lowbit(12)=lowbit([1100]_2)=[100]_2=4$</p><h3 id=函数实现>函数实现：</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=kt>int</span> <span class=nf>lowbit</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>x</span> <span class=o>&amp;</span> <span class=o>-</span><span class=n>x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=树状数组思想>树状数组思想</h2><p>树状数组的本质思想是使用树结构维护<strong>前缀和</strong>，从而把时间复杂度降为 $O(\log n)$。</p><p>对于一个序列，对其建立如下树形结构：</p><ol><li>每个结点 $tr[x]$ 保存以 $x$ 为根的子树中叶结点值的和；</li><li>每个结点覆盖的长度为 $lowbit(x)$；</li><li>$tr[x]$ 结点的父结点为 $tr[x + lowbit(x)]$；</li><li>树的深度为 $\log_2{n}+1$。</li></ol><p><figure><a class=lightgallery href=https://cdn.acwing.com/media/article/image/2020/05/28/9584_251f95d4a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-%E7%BB%93%E7%82%B9%E8%A6%86%E7%9B%96%E7%9A%84%E9%95%BF%E5%BA%A6.png title=树状数组 data-thumbnail=https://cdn.acwing.com/media/article/image/2020/05/28/9584_251f95d4a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-%E7%BB%93%E7%82%B9%E8%A6%86%E7%9B%96%E7%9A%84%E9%95%BF%E5%BA%A6.png data-sub-html="<h2> </h2><p>树状数组</p>"><img class=lazyload src=/svg/loading.min.svg data-src=https://cdn.acwing.com/media/article/image/2020/05/28/9584_251f95d4a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-%E7%BB%93%E7%82%B9%E8%A6%86%E7%9B%96%E7%9A%84%E9%95%BF%E5%BA%A6.png data-srcset="https://cdn.acwing.com/media/article/image/2020/05/28/9584_251f95d4a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-%E7%BB%93%E7%82%B9%E8%A6%86%E7%9B%96%E7%9A%84%E9%95%BF%E5%BA%A6.png, https://cdn.acwing.com/media/article/image/2020/05/28/9584_251f95d4a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-%E7%BB%93%E7%82%B9%E8%A6%86%E7%9B%96%E7%9A%84%E9%95%BF%E5%BA%A6.png 1.5x, https://cdn.acwing.com/media/article/image/2020/05/28/9584_251f95d4a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-%E7%BB%93%E7%82%B9%E8%A6%86%E7%9B%96%E7%9A%84%E9%95%BF%E5%BA%A6.png 2x" data-sizes=auto alt=https://cdn.acwing.com/media/article/image/2020/05/28/9584_251f95d4a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-%E7%BB%93%E7%82%B9%E8%A6%86%E7%9B%96%E7%9A%84%E9%95%BF%E5%BA%A6.png></a><figcaption class=image-caption>树状数组</figcaption></figure></p><h2 id=树状数组操作>树状数组操作</h2><h3 id=addx-k表示将序列中第-x-个数加上-k><code>add(x, k)</code>表示将序列中第 x 个数加上 k</h3><p>以 <code>add(3, 5)</code> 为例：</p><p>在整棵树上维护这个值，需要一层一层向上找到父结点，并将这些结点上的 $tr[x]$ 值都加上 $k$，这样保证计算区间和时的结果正确。时间复杂度为 $O(\log n)$。</p><p><figure><a class=lightgallery href=https://cdn.acwing.com/media/article/image/2020/05/28/9584_8fcf6acaa0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-add.png title=add data-thumbnail=https://cdn.acwing.com/media/article/image/2020/05/28/9584_8fcf6acaa0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-add.png data-sub-html="<h2> </h2><p>add</p>"><img class=lazyload src=/svg/loading.min.svg data-src=https://cdn.acwing.com/media/article/image/2020/05/28/9584_8fcf6acaa0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-add.png data-srcset="https://cdn.acwing.com/media/article/image/2020/05/28/9584_8fcf6acaa0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-add.png, https://cdn.acwing.com/media/article/image/2020/05/28/9584_8fcf6acaa0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-add.png 1.5x, https://cdn.acwing.com/media/article/image/2020/05/28/9584_8fcf6acaa0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-add.png 2x" data-sizes=auto alt=https://cdn.acwing.com/media/article/image/2020/05/28/9584_8fcf6acaa0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-add.png></a><figcaption class=image-caption>add</figcaption></figure></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=kt>void</span> <span class=nf>add</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>,</span> <span class=kt>int</span> <span class=n>k</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=n>x</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span> <span class=o>+=</span> <span class=n>lowbit</span><span class=p>(</span><span class=n>i</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>tr</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>+=</span> <span class=n>k</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=sumx-表示将查询序列前-x-个数的和><code>sum(x)</code> 表示将查询序列前 x 个数的和</h3><p>以 <code>sum(7)</code> 为例：</p><p>查询这个点的前缀和，需要从这个点向左上找到上一个结点，将加上其结点的值。向左上找到上一个结点，只需要将下标 $x -= lowbit(x)$，例如 $7 - lowbit(7) = 6$。</p><p><figure><a class=lightgallery href=https://cdn.acwing.com/media/article/image/2020/05/28/9584_25066066a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-ask.png title=sum data-thumbnail=https://cdn.acwing.com/media/article/image/2020/05/28/9584_25066066a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-ask.png data-sub-html="<h2> </h2><p>sum</p>"><img class=lazyload src=/svg/loading.min.svg data-src=https://cdn.acwing.com/media/article/image/2020/05/28/9584_25066066a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-ask.png data-srcset="https://cdn.acwing.com/media/article/image/2020/05/28/9584_25066066a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-ask.png, https://cdn.acwing.com/media/article/image/2020/05/28/9584_25066066a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-ask.png 1.5x, https://cdn.acwing.com/media/article/image/2020/05/28/9584_25066066a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-ask.png 2x" data-sizes=auto alt=https://cdn.acwing.com/media/article/image/2020/05/28/9584_25066066a0-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84-ask.png></a><figcaption class=image-caption>sum</figcaption></figure></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=kt>int</span> <span class=nf>sum</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>res</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=n>x</span><span class=p>;</span> <span class=n>i</span><span class=p>;</span> <span class=n>i</span> <span class=o>-=</span> <span class=n>lowbit</span><span class=p>(</span><span class=n>i</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>res</span> <span class=o>+=</span> <span class=n>tr</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=树状数组核心代码>树状数组核心代码</h2><p>树状数组三大核心操作：</p><ul><li><code>lowbit(x)</code> 求非负整数 $x$ 在二进制表示下最低位 $1$</li><li><code>add(x, k)</code> 在第 x 个位置上加上 k</li><li><code>sum(x)</code> 求第 1~x 个元素的和</li></ul><blockquote><p>在 <code>c/c++</code> 中，为了解决一些频繁调用的小函数大量消耗栈空间（栈内存）的问题，特别的引入了 <code>inline</code> 修饰符，表示为内联函数。</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=kr>inline</span> <span class=kt>int</span> <span class=nf>lowbit</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>x</span> <span class=o>&amp;</span> <span class=p>(</span><span class=o>-</span><span class=n>x</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>inline</span> <span class=kt>void</span> <span class=nf>add</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>,</span> <span class=kt>int</span> <span class=n>k</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=n>x</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span> <span class=o>+=</span> <span class=n>lowbit</span><span class=p>(</span><span class=n>i</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>tr</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>+=</span> <span class=n>k</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>inline</span> <span class=kt>int</span> <span class=nf>sum</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>res</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=n>x</span><span class=p>;</span> <span class=n>i</span><span class=p>;</span> <span class=n>i</span> <span class=o>-=</span> <span class=n>lowbit</span><span class=p>(</span><span class=n>i</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>res</span> <span class=o>+=</span> <span class=n>tr</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=区间修改单点查询>区间修改，单点查询</h2><ol><li>给区间里的所有数加上 $k$</li><li>查询某个下标的数的值</li></ol><h3 id=差分>差分</h3><p>先来介绍一下差分</p><p>设数组 $a={1,6,8,5,10}$，那么差分数组 $b={1,5,2,-3,5}$</p><p>也就是说 $b[i]=a[i]-a[i-1](a[0]=0)$，那么 $a[i]=b[1]+&mldr;.+b[i]$</p><p>假如区间 $[2,4]$ 都加上 $2$ 的话</p><p>$a$ 数组变为 $a={1,8,10,7,10}$，$b$ 数组变为 $b={1,7,2,-3,3}$</p><p>其中，$b$ 数组只有 $b[2]$ 和 $b[5]$ 变了，因为区间 $[2,4]$ 是同时加上 2 的,所以在区间内 $a[i]-a[i-1]$ 是不变的.</p><p>所以对区间 $[x,y]$ 进行修改,只用修改 $b[x]$ 与 $b[y+1]$:</p><p>$b[x]=b[x]+k$</p><p>$b[y+1]=b[y+1]-k$</p><p>因此，本题可以用树状数组维护一个差分序列。</p><h3 id=代码>代码</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;bits/stdc++.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=kt>int</span> <span class=n>N</span> <span class=o>=</span> <span class=mi>500010</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>n</span><span class=p>,</span> <span class=n>m</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>a</span><span class=p>[</span><span class=n>N</span><span class=p>],</span> <span class=n>tr</span><span class=p>[</span><span class=n>N</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>inline</span> <span class=kt>int</span> <span class=nf>lowbit</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>x</span> <span class=o>&amp;</span> <span class=o>-</span><span class=n>x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>inline</span> <span class=kt>void</span> <span class=nf>add</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>,</span> <span class=kt>int</span> <span class=n>k</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=n>x</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span> <span class=o>+=</span> <span class=n>lowbit</span><span class=p>(</span><span class=n>i</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>		<span class=n>tr</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>+=</span> <span class=n>k</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>inline</span> <span class=kt>int</span> <span class=nf>sum</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=kt>int</span> <span class=n>res</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=n>x</span><span class=p>;</span> <span class=n>i</span><span class=p>;</span> <span class=n>i</span> <span class=o>-=</span> <span class=n>lowbit</span><span class=p>(</span><span class=n>i</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>		<span class=n>res</span> <span class=o>+=</span> <span class=n>tr</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>std</span><span class=o>::</span><span class=n>ios</span><span class=o>::</span><span class=n>sync_with_stdio</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>std</span><span class=o>::</span><span class=n>cin</span><span class=p>.</span><span class=n>tie</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>std</span><span class=o>::</span><span class=n>cin</span> <span class=o>&gt;&gt;</span> <span class=n>n</span> <span class=o>&gt;&gt;</span> <span class=n>m</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>std</span><span class=o>::</span><span class=n>cin</span> <span class=o>&gt;&gt;</span> <span class=n>a</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>		<span class=n>add</span><span class=p>(</span><span class=n>i</span><span class=p>,</span> <span class=n>a</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>-</span> <span class=n>a</span><span class=p>[</span><span class=n>i</span> <span class=o>-</span> <span class=mi>1</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kt>int</span> <span class=n>op</span><span class=p>,</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>,</span> <span class=n>k</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=k>while</span> <span class=p>(</span><span class=n>m</span><span class=o>--</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>std</span><span class=o>::</span><span class=n>cin</span> <span class=o>&gt;&gt;</span> <span class=n>op</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>		<span class=k>if</span> <span class=p>(</span><span class=n>op</span> <span class=o>==</span> <span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>			<span class=n>std</span><span class=o>::</span><span class=n>cin</span> <span class=o>&gt;&gt;</span> <span class=n>x</span> <span class=o>&gt;&gt;</span> <span class=n>y</span> <span class=o>&gt;&gt;</span> <span class=n>k</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			<span class=n>add</span><span class=p>(</span><span class=n>x</span><span class=p>,</span> <span class=n>k</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>			<span class=n>add</span><span class=p>(</span><span class=n>y</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=o>-</span><span class=n>k</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>		<span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>			<span class=n>std</span><span class=o>::</span><span class=n>cin</span> <span class=o>&gt;&gt;</span> <span class=n>x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			<span class=n>std</span><span class=o>::</span><span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>sum</span><span class=p>(</span><span class=n>x</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=sc>&#39;\n&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>		<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=逆序对>逆序对</h2><p><a href=https://www.luogu.com.cn/problem/P1908 target=_blank rel="noopener noreffer">原题链接</a></p><p><strong>逆序对定义</strong>：对于给定的一段正整数序列，逆序对就是序列中 $a_i>a_j$ 且 $i&lt;j$ 的有序对。</p><h3 id=离散化discretization>离散化(Discretization)</h3><p>在以前介绍的树状数组中，只需要开一个与原序列中最大元素相等的长度数组就行，那么如果我的序列是 1，5，3，8，999，本来 5 个元素，却需要开到 999 这么大，造成了巨大的空间浪费，</p><p>离散化就是另开一个数组$d$，$d[i]$用来存放第 $i$ 小的数在原序列的什么位置，比如原序列 $a={999,333,444,21,1}$，第一小就是 1，他在 $a$ 中的位是 5，所以 $d[1]=5$，同理 $d[2]=3$，&mldr;，所以 $d$ 数组为 $d={5,3,4,2,1}$，</p><p>具体实现：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>std</span><span class=o>::</span><span class=n>cin</span> <span class=o>&gt;&gt;</span> <span class=n>a</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=n>v</span><span class=p>.</span><span class=n>push_back</span><span class=p>(</span><span class=n>a</span><span class=p>[</span><span class=n>i</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>std</span><span class=o>::</span><span class=n>sort</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>(),</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>());</span>
+</span></span><span class=line><span class=cl><span class=n>v</span><span class=p>.</span><span class=n>erase</span><span class=p>(</span><span class=n>unique</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>(),</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>()),</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>());</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>a</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>std</span><span class=o>::</span><span class=n>upper_bound</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>(),</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>(),</span> <span class=n>a</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=o>-</span> <span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>();</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=树状数组求和>树状数组求和</h3><p>根据上面的步骤每一次把一个新的数 x 放进去之后，都要求比他大的元素有几个，而比他大的元素个数一定是 $x+1$ 到 $n$ 中存在数的个数，也就是 $[x+1,n]$ 中有几个数，是不是很耳熟，有点像之前讲的前缀和了，只不过树状数组 $tr$ 表是的不是前缀和了，$tr[x]$ 表示的是 $[1,x]$ 中有几个数已经存在，这样我们每次把一个新的数 $x$ 放进去的时候，都需要把包含这个数的结点更新，然后查询 $[x+1,n]$ 有几个数已经存在。</p><p>即 $ans=sum(n)-sum(x)$</p><p>具体实现：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=n>i64</span> <span class=n>res</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>res</span> <span class=o>+=</span> <span class=n>sum</span><span class=p>(</span><span class=n>n</span><span class=p>)</span> <span class=o>-</span> <span class=n>sum</span><span class=p>(</span><span class=n>a</span><span class=p>[</span><span class=n>i</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=n>add</span><span class=p>(</span><span class=n>a</span><span class=p>[</span><span class=n>i</span><span class=p>],</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=代码-1>代码</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;bits/stdc++.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=k>using</span> <span class=n>i64</span> <span class=o>=</span> <span class=kt>long</span> <span class=kt>long</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=kt>int</span> <span class=n>N</span> <span class=o>=</span> <span class=mi>500010</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>n</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>w</span><span class=p>[</span><span class=n>N</span><span class=p>],</span> <span class=n>tr</span><span class=p>[</span><span class=n>N</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=n>std</span><span class=o>::</span><span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;</span> <span class=n>v</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>inline</span> <span class=kt>int</span> <span class=nf>lowbit</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>x</span> <span class=o>&amp;</span> <span class=o>-</span><span class=n>x</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>inline</span> <span class=kt>void</span> <span class=nf>add</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>,</span> <span class=kt>int</span> <span class=n>k</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=n>x</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span> <span class=o>+=</span> <span class=n>lowbit</span><span class=p>(</span><span class=n>i</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>		<span class=n>tr</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>+=</span> <span class=n>k</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>inline</span> <span class=kt>int</span> <span class=nf>sum</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=kt>int</span> <span class=n>res</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=n>x</span><span class=p>;</span> <span class=n>i</span><span class=p>;</span> <span class=n>i</span> <span class=o>-=</span> <span class=n>lowbit</span><span class=p>(</span><span class=n>i</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>		<span class=n>res</span> <span class=o>+=</span> <span class=n>tr</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>std</span><span class=o>::</span><span class=n>ios</span><span class=o>::</span><span class=n>sync_with_stdio</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>std</span><span class=o>::</span><span class=n>cin</span><span class=p>.</span><span class=n>tie</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>std</span><span class=o>::</span><span class=n>cin</span> <span class=o>&gt;&gt;</span> <span class=n>n</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>std</span><span class=o>::</span><span class=n>cin</span> <span class=o>&gt;&gt;</span> <span class=n>w</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>		<span class=n>v</span><span class=p>.</span><span class=n>push_back</span><span class=p>(</span><span class=n>w</span><span class=p>[</span><span class=n>i</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>std</span><span class=o>::</span><span class=n>sort</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>(),</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>());</span>
+</span></span><span class=line><span class=cl>	<span class=n>v</span><span class=p>.</span><span class=n>erase</span><span class=p>(</span><span class=n>unique</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>(),</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>()),</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>());</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>w</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>std</span><span class=o>::</span><span class=n>upper_bound</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>(),</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>(),</span> <span class=n>w</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=o>-</span> <span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>i64</span> <span class=n>res</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;=</span> <span class=n>n</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>res</span> <span class=o>+=</span> <span class=n>sum</span><span class=p>(</span><span class=n>n</span><span class=p>)</span> <span class=o>-</span> <span class=n>sum</span><span class=p>(</span><span class=n>w</span><span class=p>[</span><span class=n>i</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>		<span class=n>add</span><span class=p>(</span><span class=n>w</span><span class=p>[</span><span class=n>i</span><span class=p>],</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>std</span><span class=o>::</span><span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>res</span> <span class=o>&lt;&lt;</span> <span class=sc>&#39;\n&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2024-07-07&nbsp;<a class=git-hash href=https://github.com/pjimming/blog/commit/02e978f0a52e89cc5f9af7fab75dce874e75226e target=_blank title="commit by panjiangming(panjiangming@kuaishou.com) 02e978f0a52e89cc5f9af7fab75dce874e75226e: update cdn">
+<i class="fas fa-hashtag fa-fw" aria-hidden=true></i>02e978f</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/2024-03-19/fenwick/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://blog.pjmcode.top/2024-03-19/fenwick/ data-title=深入浅出理解树状数组 data-hashtags=算法,树状数组,数据结构,ACM><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://blog.pjmcode.top/2024-03-19/fenwick/ data-hashtag=算法><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Hacker News" data-sharer=hackernews data-url=https://blog.pjmcode.top/2024-03-19/fenwick/ data-title=深入浅出理解树状数组><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://blog.pjmcode.top/2024-03-19/fenwick/ data-title=深入浅出理解树状数组><i data-svg-src=/lib/simple-icons/icons/line.min.svg aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://blog.pjmcode.top/2024-03-19/fenwick/ data-title=深入浅出理解树状数组 data-image=https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240319/imageimage.70a3fppf99.webp><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E7%AE%97%E6%B3%95/>算法</a>,&nbsp;<a href=/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/>树状数组</a>,&nbsp;<a href=/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/>数据结构</a>,&nbsp;<a href=/tags/acm/>ACM</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/2024-03-18/2024-01/ class=prev rel=prev title="个人摄影记录归档：2024.01 ~ 2024.03"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>个人摄影记录归档：2024.01 ~ 2024.03</a>
+<a href=/2024-03-20/photomaker/ class=next rel=next title="【论文泛读】PhotoMaker: Customizing Realistic Human Photos via Stacked ID Embedding">【论文泛读】PhotoMaker: Customizing Realistic Human Photos via Stacked ID Embedding<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=giscus class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app>Giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><span id=run-time></span></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://github.com/pjimming/ target=_blank>潘江明</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=备案编号" target=_blank>浙ICP备2024074882号</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/lightgallery/css/lightgallery-bundle.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/contrib/auto-render.min.js></script><script type=text/javascript src=/lib/katex/contrib/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{giscus:{category:"Announcements",categoryId:"DIC_kwDOLZmgDc4Cdm7x",darkTheme:"preferred_color_scheme",emitMetadata:"0",inputPosition:"top",lang:"zh-CN",lazyLoading:!1,lightTheme:"light",mapping:"pathname",reactionsEnabled:"1",repo:"pjimming/blog-comment",repoId:"R_kgDOLZmgDQ"}},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",lunrLanguageCode:"zh",lunrSegmentitURL:"/lib/lunr/lunr.segmentit.js",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.staticfile.net/jquery/2.2.4/jquery.min.js></script><script type=text/javascript src=/js/custom.js></script></body></html>
