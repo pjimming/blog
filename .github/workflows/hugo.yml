@@ -11,6 +11,8 @@ jobs:
               with:
                   submodules: true
                   fetch-depth: 0
+            - name: Update submodules
+              run: git submodule update --init
             - name: Setup Hugo
               uses: peaceiris/actions-hugo@v2
               with:
