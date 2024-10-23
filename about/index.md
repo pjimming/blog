@@ -18,8 +18,6 @@
 
 主题样式：[LoveIt](https://github.com/dillonzq/LoveIt)
 
-发布平台：[Netlify](https://www.netlify.com/)
-
 评论系统：[Giscus](https://github.com/giscus/giscus)
 
 图床工具：[PicX](https://github.com/XPoet/picx)
@@ -32,8 +30,6 @@ Static CDN：[jsDelivr](https://www.jsdelivr.com/)
 我是潘江明，始于 2001-09-05，杭州。
 
 一个有奇怪想法、整天逼逼叨叨或沉默不语的人，一个无趣的人。
-
-我在浙江省临安中学度过了快乐的三年（2017.8 ~ 2020.7）。
 
 本科就读于浙江科技大学（2020.9 ~ 2024.6）工学学士，计算机科学与技术。
 
