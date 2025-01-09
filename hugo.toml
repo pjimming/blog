@@ -32,11 +32,7 @@ enableEmoji = true
 # 忽略一些构建错误
 ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
 
-# 作者配置
-[author]
-email = "panjm2001@126.com"
-link = "https://github.com/pjimming/"
-name = "潘江明"
+
 
 # 菜单配置
 [menu]
@@ -317,6 +313,12 @@ Youtubechannel = ""
 Youtubecustom = "" 
 Youtubelegacy = "" 
 Zhihu = "" 
+
+# 作者配置
+[params.authors]
+email = "panjm2001@126.com"
+link = "https://github.com/pjimming/"
+name = "潘江明"
 
 #  文章页面全局配置
 [params.page]
