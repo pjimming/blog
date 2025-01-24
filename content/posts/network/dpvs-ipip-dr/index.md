@@ -19,6 +19,8 @@ featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@
 outdatedInfoWarning: true
 ---
 
+简单介绍一下四层接入中的 DR 模式
+
 <!--more-->
 
 ---
