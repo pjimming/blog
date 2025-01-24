@@ -4,6 +4,7 @@ clean:
 serve:
 	hugo serve --disableFastRender --buildDrafts --gc --minify --bind="0.0.0.0"
 
+# make post title="目录1/..2/标题"
 post:
 	@hugo new content posts/$(title)/index.md
 
