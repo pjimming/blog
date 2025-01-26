@@ -13,8 +13,8 @@ images: []
 tags: [linux, network, Linux高性能服务器编程]
 categories: [Linux高性能服务器编程]
 
-featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20241023/image-image.9dcyl5v03f.webp"
-featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20241023/image-image.9dcyl5v03f.webp"
+featuredImage: "https://picx-img.pjmcode.top/20241023/image-image.9dcyl5v03f.webp"
+featuredImagePreview: "https://picx-img.pjmcode.top/20241023/image-image.9dcyl5v03f.webp"
 
 outdatedInfoWarning: true
 ---

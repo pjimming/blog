@@ -13,8 +13,8 @@ images: []
 tags: [golang, 性能优化]
 categories: [golang]
 
-featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240321/imageimage.3d4jvb9pj3.webp"
-featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240321/imageimage.3d4jvb9pj3.webp"
+featuredImage: "https://picx-img.pjmcode.top/20240321/imageimage.3d4jvb9pj3.webp"
+featuredImagePreview: "https://picx-img.pjmcode.top/20240321/imageimage.3d4jvb9pj3.webp"
 
 outdatedInfoWarning: true
 ---

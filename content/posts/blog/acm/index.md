@@ -240,7 +240,7 @@ featuredImagePreview: "featured-image.png"
 
 这次有所突破，打了 226 分，拿了个人国二，以及团队省二国二。
 
-![](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240424/image-image.8hg9xf3bbd.webp)
+![](https://picx-img.pjmcode.top/20240424/image-image.8hg9xf3bbd.webp)
 
 ## 结束
 

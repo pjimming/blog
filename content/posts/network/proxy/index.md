@@ -13,8 +13,8 @@ images: []
 tags: [正向代理, 反向代理, 计算机网络]
 categories: [计算机网络]
 
-featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240902/image-image.1ovdi3q49e.webp"
-featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240902/image-image.1ovdi3q49e.webp"
+featuredImage: "https://picx-img.pjmcode.top/20240902/image-image.1ovdi3q49e.webp"
+featuredImagePreview: "https://picx-img.pjmcode.top/20240902/image-image.1ovdi3q49e.webp"
 
 outdatedInfoWarning: true
 ---
@@ -33,7 +33,7 @@ outdatedInfoWarning: true
 
 客户端将请求发送给正向代理，然后由代理服务器将请求转发给目标服务器。服务器处理请求之后，将结果传回代理服务器，然后代理服务器将结果转发给客户端。
 
-![正向代理](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240902/image-image.73tw0jixkw.webp)
+![正向代理](https://picx-img.pjmcode.top/20240902/image-image.73tw0jixkw.webp)
 
 ### 特点
 
@@ -54,7 +54,7 @@ outdatedInfoWarning: true
 
 客户端将请求发送给反向代理，然后由代理服务器根据一定的规则将请求转发给后端服务器。后端服务器将响应返回给代理服务器，再由代理服务器将响应转发给客户端。反向代理对客户端是透明的，客户端无需知道实际服务器的地址，只需将反向代理当作目标服务器一样发送请求就可以了。
 
-![反向代理](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240902/image-image.6t727e80ox.webp)
+![反向代理](https://picx-img.pjmcode.top/20240902/image-image.6t727e80ox.webp)
 
 ### 特点
 
