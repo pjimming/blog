@@ -43,7 +43,7 @@ change buffer 的作用就是将记录的变更操作缓存起来，因此缓存
 
 redo log 主要节省随机写磁盘的 IO 消耗（转为顺序写）；change buffer 主要节省随机读磁盘的 IO 消耗。
 
-![带change buffer的更新过程](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240506/image-image.73tra6jw4l.webp)
+![带change buffer的更新过程](https://picx-img.pjmcode.top/20240506/image-image.73tra6jw4l.webp)
 
 ### 异常重启是否会丢失 change buffer 和数据
 
@@ -81,8 +81,8 @@ MySQL 提供采样统计来得到索引的基数。由于采样统计，可能�
 
 如果使用 delete 是无法收缩表占用空间的。删除的数据只会标注上可复用的标记。需要使用 alter table 命令重建表。同时 Online DDL 的方式可以考虑在业务低峰期使用。
 
-![锁表DDL流程](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240508/image-image.syrf4zgo5.webp)
-![Online DDL流程](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240508/image-image.101zakltfr.webp)
+![锁表DDL流程](https://picx-img.pjmcode.top/20240508/image-image.syrf4zgo5.webp)
+![Online DDL流程](https://picx-img.pjmcode.top/20240508/image-image.101zakltfr.webp)
 
 - `alter table t engine = InnoDB`（也就是 recreate）；
 - `analyze table t` 其实不是重建表，只是对表的索引信息做重新统计，没有修改数据，这个过程中加了 MDL 读锁；

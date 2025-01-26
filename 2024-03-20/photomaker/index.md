@@ -30,7 +30,7 @@
 
 ## 实现方法
 
-![PhotoMaker的算法流程与数据集准备](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240320/imageimage.26l8lpo27a.webp)
+![PhotoMaker的算法流程与数据集准备](https://picx-img.pjmcode.top/20240320/imageimage.26l8lpo27a.webp)
 
 ### 解决方案
 
@@ -41,7 +41,7 @@
 
 ### 训练流程
 
-![PhotoMaker的训练流程](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240320/imageimage.361bywecn1.webp)
+![PhotoMaker的训练流程](https://picx-img.pjmcode.top/20240320/imageimage.361bywecn1.webp)
 
 1. 把同一 ID 的多个图像送入图像编码器进行编码，得到多个 Image Embedding；
 2. 对下方输入的文本进行 Encode 得到 Text Embedding，并且找出触发词，如图中输入的**man**。
@@ -55,17 +55,17 @@
 
 ### 数据集
 
-![以ID为中心的数据组装流程](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240320/imageimage.4jnv2xvn4e.webp)
+![以ID为中心的数据组装流程](https://picx-img.pjmcode.top/20240320/imageimage.4jnv2xvn4e.webp)
 
 ## 结果
 
 ### Realistic
 
-![Realistic generation](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240320/imageimage.1hrz1q4lhp.webp)
+![Realistic generation](https://picx-img.pjmcode.top/20240320/imageimage.1hrz1q4lhp.webp)
 
 ### Stylization
 
-![Stylization generation](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240320/imageimage.8s32crwkai.webp)
+![Stylization generation](https://picx-img.pjmcode.top/20240320/imageimage.8s32crwkai.webp)
 
 ## 参考
 

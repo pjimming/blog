@@ -15,14 +15,14 @@
 
 采样时，进程每秒会暂停 100 次，每次暂停会记录当前的调用栈信息，汇总之后根据调用栈在采样中出现的次数来推断程序的运行时间。
 
-![CPU采样步骤](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240324/image-image.3uulo6g7nl.webp)
+![CPU采样步骤](https://picx-img.pjmcode.top/20240324/image-image.3uulo6g7nl.webp)
 
 1. 操作系统：由进程注册的定时器，每 10ms 向进程发送一次 SIGPROF 信号
 2. 进程：每次收到 SIGPROF 信号会记录调用堆栈
 3. 写缓冲：启动一个 goroutine，每 100ms 读取已经记录的调用栈并写入输入流
 4. 采样停止时，进程向 OS 取消定时器，不再接受信号，写缓冲读取不到新的堆栈信息时，结束输出
 
-![CPU采样流程](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240324/image-image.39ky1vr3hn.webp)
+![CPU采样流程](https://picx-img.pjmcode.top/20240324/image-image.39ky1vr3hn.webp)
 
 ## Heap - 堆内存
 
@@ -43,7 +43,7 @@
 - Goroutine：记录所有用户发起且运行中的 goroutine（即入口非 runtime 开头的），以及 main 函数所在的 goroutine 信息和创建这些 goroutine 的调用栈
 - ThreadCreate：记录程序创建的所有系统线程的信息
 
-![协程和线程创建的采样流程](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240324/image-image.9gwc22cn2h.webp)
+![协程和线程创建的采样流程](https://picx-img.pjmcode.top/20240324/image-image.9gwc22cn2h.webp)
 
 可以发现都是在 STW 之后，遍历所有 goroutine/线程的列表（M 对应 GMP 中的 M，在 Golang 中和线程一一对应）并输出堆栈，最后 Start The World 继续运行。这个采样是立刻触发的全量记录，可以比较两个时间点的差值来得到某一时间段的指标
 
@@ -56,7 +56,7 @@
   - 采样争抢锁的次数和耗时
   - 采样率：只记录固定比例的锁操作，设置为 1 时表示每次加锁均被记录
 
-![阻塞和锁竞争的采样流程](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20240324/image-image.sypmzjq7s.webp)
+![阻塞和锁竞争的采样流程](https://picx-img.pjmcode.top/20240324/image-image.sypmzjq7s.webp)
 
 阻塞操作的采样率是一个**阈值**，消耗超过阈值时间的阻塞操作才会被记录。而锁竞争的采样率是一个**比例**，运行时会通过随机数来记录固定比例的锁操作。
 

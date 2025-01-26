@@ -23,7 +23,7 @@ DPVS 基于 DPDK（Data Plane Development Kit）的四层负载均衡器，特�
 
 ## 链路图解
 
-![DR模式链路图解](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20250124/image-image.4jo7dhx5bj.webp)
+![DR模式链路图解](https://picx-img.pjmcode.top/20250124/image-image.4jo7dhx5bj.webp)
 
 1. 客户端发送一个请求，目的 IP 是 DPVS 集群监听的 VIP
 2. DPVS 集群收到了这个请求，将这个请求数据包封装成一个 ipip 数据包（源 IP: LB_IP, 目的 IP: RS_IP, 协议: 4；其中协议：4 表示一个 ipip 数据包），通过负载均衡算法，将这个 ipip 数据包发送给与 dpvs 打通 ipip 隧道的 rs 服务器

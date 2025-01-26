@@ -59,10 +59,10 @@ code acm-dev-container
 
 打开这个目录后，点击左下角的链接 UI（箭头所指）
 
-![点击蓝色小块](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20250126/image-image.7snbcz47ed.webp)
+![点击蓝色小块](https://picx-img.pjmcode.top/20250126/image-image.7snbcz47ed.webp)
 
 选择 Reopen in Container
-![选择在容器里重新打开](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20250126/image-image.1ovjajq46g.webp)
+![选择在容器里重新打开](https://picx-img.pjmcode.top/20250126/image-image.1ovjajq46g.webp)
 
 Docker 会根据 Dockerfile 自动拉取镜像，构建容器，配置所需要的环境
 
@@ -110,5 +110,5 @@ CMD ["/bin/zsh"]
 ```
 
 等待启动完成后，就是一个可以愉快写题的环境了。
-![ABC390_A](https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20250126/image-image.2yyggvvlj8.webp)
+![ABC390_A](https://picx-img.pjmcode.top/20250126/image-image.2yyggvvlj8.webp)
 
