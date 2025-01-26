@@ -10,8 +10,8 @@ description: ""
 license: ""
 images: []
 
-tags: []
-categories: []
+tags: [计算机网络, dpvs]
+categories: [计算机网络]
 
 featuredImage: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20250109/image-image.58hgci0kvs.webp"
 featuredImagePreview: "https://cdn.jsdelivr.net/gh/pjimming/picx-images-hosting@master/20250109/image-image.58hgci0kvs.webp"
