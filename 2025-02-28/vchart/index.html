@@ -1,0 +1,225 @@
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Vue封装VChart组件，实现简单易用的图表 - 江明说|Jimmy Talk</title><meta http-equiv=x-dns-prefetch-control content="on">
+<link rel=dns-prefetch href=//cdn.jsdelivr.net><link rel=dns-prefetch href=//pjimming.github.io><meta name=Description content="江明说"><meta property="og:url" content="https://blog.pjmcode.top/2025-02-28/vchart/"><meta property="og:site_name" content="江明说|Jimmy Talk"><meta property="og:title" content="Vue封装VChart组件，实现简单易用的图表"><meta property="og:description" content="通过封装 VChart 组件，实现简单易用的图表。达到代码复用，提高研发效率。"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-02-28T19:46:40+08:00"><meta property="article:modified_time" content="2025-02-28T20:07:05+08:00"><meta property="og:image" content="https://blog.pjmcode.top/logo.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://blog.pjmcode.top/logo.png"><meta name=twitter:title content="Vue封装VChart组件，实现简单易用的图表"><meta name=twitter:description content="通过封装 VChart 组件，实现简单易用的图表。达到代码复用，提高研发效率。"><meta name=application-name content="江明说"><meta name=apple-mobile-web-app-title content="江明说"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://blog.pjmcode.top/2025-02-28/vchart/><link rel=prev href=https://blog.pjmcode.top/2025-01-26/acm-dev-container/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=/lib/fontawesome-free/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.css></noscript><link rel=preload href=/lib/animate/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Vue封装VChart组件，实现简单易用的图表","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/blog.pjmcode.top\/2025-02-28\/vchart\/"},"genre":"posts","wordcount":766,"url":"https:\/\/blog.pjmcode.top\/2025-02-28\/vchart\/","datePublished":"2025-02-28T19:46:40+08:00","dateModified":"2025-02-28T20:07:05+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"PanJM"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="江明说|Jimmy Talk"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/images/favicon.ico data-srcset="/images/favicon.ico, /images/favicon.ico 1.5x, /images/favicon.ico 2x" data-sizes=auto alt=/images/favicon.ico title=/images/favicon.ico>Jimmy Talk</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/><i class='fa-solid fa-box-archive'></i> 所有文章 </a><a class=menu-item href=/tags/><i class='fa-solid fa-tag'></i> 标签 </a><a class=menu-item href=/categories/><i class='fa-solid fa-table-list'></i> 分类 </a><a class=menu-item href=/friend/><i class='fa-solid fa-user-group'></i> 友链 </a><a class=menu-item href=/book-list/><i class='fa-solid fa-book'></i> 书单 </a><a class=menu-item href=/about/><i class='fa-regular fa-address-card'></i> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i>
+</span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="江明说|Jimmy Talk"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/images/favicon.ico data-srcset="/images/favicon.ico, /images/favicon.ico 1.5x, /images/favicon.ico 2x" data-sizes=auto alt=/images/favicon.ico title=/images/favicon.ico>Jimmy Talk</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title><i class='fa-solid fa-box-archive'></i>所有文章</a><a class=menu-item href=/tags/ title><i class='fa-solid fa-tag'></i>标签</a><a class=menu-item href=/categories/ title><i class='fa-solid fa-table-list'></i>分类</a><a class=menu-item href=/friend/ title><i class='fa-solid fa-user-group'></i>友链</a><a class=menu-item href=/book-list/ title><i class='fa-solid fa-book'></i>书单</a><a class=menu-item href=/about/ title><i class='fa-regular fa-address-card'></i>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue封装VChart组件，实现简单易用的图表</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://github.com/pjimming/ title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>PanJM</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2025-02-28>2025-02-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 766 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 2 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=https://cdn-cf.pjmcode.top/picgo/1740743929.png data-srcset="https://cdn-cf.pjmcode.top/picgo/1740743929.png, https://cdn-cf.pjmcode.top/picgo/1740743929.png 1.5x, https://cdn-cf.pjmcode.top/picgo/1740743929.png 2x" data-sizes=auto alt=https://cdn-cf.pjmcode.top/picgo/1740743929.png title=https://cdn-cf.pjmcode.top/picgo/1740743929.png></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#前置知识>前置知识</a></li><li><a href=#vchart-封装>VChart 封装</a></li><li><a href=#使用>使用</a></li></ul></nav></div></div><div class=content id=content><p>通过封装 VChart 组件，实现简单易用的图表。达到代码复用，提高研发效率。</p><hr><p>最近有一个需求，需要实现一个图表，图表的数据是动态的，需要根据后端返回的数据进行实时更新。</p><p>在调研了 ECharts 后，发现 ECharts 的使用门槛较高，需要对 ECharts 的 API 有一定的了解。同时关注到了 VChart，VChart 的使用门槛较低，只需要对 VChart 的 API 有一定的了解即可。同时对 VChart 的文档进行了调研，发现 VChart 的文档非常详细，可以满足我们的需求。</p><p>当然，并不是说 VChart 就完美无缺，VChart 的文档虽然详细，但是对于一些特殊的场景，VChart 的文档并没有给出详细的说明。比如，如何实现动态数据更新，如何实现图表的交互等。因此需要我们对 VChart 进行二次封装，以满足我们的需求。</p><h2 id=前置知识>前置知识</h2><p><a href=https://visactor.io/vchart/guide/tutorial_docs/Getting_Started target=_blank rel="noopener noreffer">快速上手 VChart</a></p><h2 id=vchart-封装>VChart 封装</h2><p><code>components/VChart.vue</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-vue data-lang=vue><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>script</span> <span class=na>setup</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>onMounted</span><span class=p>,</span> <span class=nx>defineProps</span><span class=p>,</span> <span class=nx>watch</span> <span class=p>}</span> <span class=nx>from</span> <span class=s2>&#34;vue&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=nx>VChart</span> <span class=nx>from</span> <span class=s2>&#34;@visactor/vchart&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>useAppStore</span> <span class=p>}</span> <span class=nx>from</span> <span class=s2>&#34;@/store&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>appStore</span> <span class=o>=</span> <span class=nx>useAppStore</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 组件接收的 props
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kr>const</span> <span class=nx>props</span> <span class=o>=</span> <span class=nx>defineProps</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>  <span class=c1>// 图表的配置
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=nx>spec</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>type</span><span class=o>:</span> <span class=nb>Object</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=k>default</span><span class=o>:</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>({}),</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=nx>width</span><span class=o>:</span> <span class=p>{</span> <span class=nx>type</span><span class=o>:</span> <span class=p>[</span><span class=nb>String</span><span class=p>,</span> <span class=nb>Number</span><span class=p>],</span> <span class=k>default</span><span class=o>:</span> <span class=s2>&#34;100%&#34;</span> <span class=p>},</span> <span class=c1>// 图表宽度
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=nx>height</span><span class=o>:</span> <span class=p>{</span> <span class=nx>type</span><span class=o>:</span> <span class=p>[</span><span class=nb>String</span><span class=p>,</span> <span class=nb>Number</span><span class=p>],</span> <span class=k>default</span><span class=o>:</span> <span class=s2>&#34;400px&#34;</span> <span class=p>},</span> <span class=c1>// 图表高度
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>chartContainer</span> <span class=o>=</span> <span class=nx>ref</span><span class=p>(</span><span class=kc>null</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 绑定 VChart 实例
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>let</span> <span class=nx>chart</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>function</span> <span class=nx>createOrUpdateChart</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;createOrUpdateChart&#34;</span><span class=p>,</span> <span class=nx>chartContainer</span><span class=p>.</span><span class=nx>value</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span><span class=nx>chartContainer</span><span class=p>.</span><span class=nx>value</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>chart</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;📌 创建新图表实例&#34;</span><span class=p>,</span> <span class=nx>props</span><span class=p>.</span><span class=nx>spec</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=nx>chart</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>VChart</span><span class=p>(</span><span class=nx>props</span><span class=p>.</span><span class=nx>spec</span><span class=p>,</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>dom</span><span class=o>:</span> <span class=nx>chartContainer</span><span class=p>.</span><span class=nx>value</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;🔄 更新图表&#34;</span><span class=p>,</span> <span class=nx>props</span><span class=p>.</span><span class=nx>spec</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=nx>chart</span><span class=p>.</span><span class=nx>updateSpec</span><span class=p>(</span><span class=nx>props</span><span class=p>.</span><span class=nx>spec</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nx>chart</span><span class=p>.</span><span class=nx>setCurrentTheme</span><span class=p>(</span><span class=nx>appStore</span><span class=p>.</span><span class=nx>isDark</span> <span class=o>?</span> <span class=s2>&#34;dark&#34;</span> <span class=o>:</span> <span class=s2>&#34;light&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nx>chart</span><span class=p>.</span><span class=nx>renderSync</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>onMounted</span><span class=p>(()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>createOrUpdateChart</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>onUpdated</span><span class=p>(()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>createOrUpdateChart</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>onBeforeUnmount</span><span class=p>(()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span><span class=nx>chart</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>chart</span><span class=p>.</span><span class=nx>release</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 可选，明暗模式切换
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>watch</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>  <span class=p>()</span> <span class=p>=&gt;</span> <span class=nx>appStore</span><span class=p>.</span><span class=nx>isDark</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>createOrUpdateChart</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>div</span>
+</span></span><span class=line><span class=cl>    <span class=na>ref</span><span class=o>=</span><span class=s>&#34;chartContainer&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=o>:</span><span class=na>style</span><span class=o>=</span><span class=s>&#34;{ width: props.width, height: props.height }&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&gt;&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>根据代码可知，我们只需要关注 spec 的配置即可，其他的都是自动处理的。</p><h2 id=使用>使用</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-vue data-lang=vue><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;mt-12 flex&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>VChart</span> <span class=nt>:spec</span><span class=o>=</span><span class=s>&#34;spec&#34;</span> <span class=p>/&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>script</span> <span class=na>setup</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=nx>VChart</span> <span class=nx>from</span> <span class=s1>&#39;@/components/VChart.vue&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=nx>api</span> <span class=nx>from</span> <span class=s1>&#39;../api&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>spec</span> <span class=o>=</span> <span class=nx>ref</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>  <span class=nx>type</span><span class=o>:</span> <span class=s1>&#39;bar&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nx>data</span><span class=o>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>id</span><span class=o>:</span> <span class=s1>&#39;barData&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=nx>values</span><span class=o>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span> <span class=nx>month</span><span class=o>:</span> <span class=s1>&#39;Monday&#39;</span><span class=p>,</span> <span class=nx>sales</span><span class=o>:</span> <span class=mi>22</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span> <span class=nx>month</span><span class=o>:</span> <span class=s1>&#39;Tuesday&#39;</span><span class=p>,</span> <span class=nx>sales</span><span class=o>:</span> <span class=mi>13</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span> <span class=nx>month</span><span class=o>:</span> <span class=s1>&#39;Wednesday&#39;</span><span class=p>,</span> <span class=nx>sales</span><span class=o>:</span> <span class=mi>25</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span> <span class=nx>month</span><span class=o>:</span> <span class=s1>&#39;Thursday&#39;</span><span class=p>,</span> <span class=nx>sales</span><span class=o>:</span> <span class=mi>29</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span> <span class=nx>month</span><span class=o>:</span> <span class=s1>&#39;Friday&#39;</span><span class=p>,</span> <span class=nx>sales</span><span class=o>:</span> <span class=mi>38</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>],</span>
+</span></span><span class=line><span class=cl>  <span class=nx>xField</span><span class=o>:</span> <span class=s1>&#39;month&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nx>yField</span><span class=o>:</span> <span class=s1>&#39;sales&#39;</span>
+</span></span><span class=line><span class=cl><span class=p>};)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>api</span><span class=p>.</span><span class=nx>getData</span><span class=p>().</span><span class=nx>then</span><span class=p>({</span> <span class=nx>data</span> <span class=p>}</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>spec</span><span class=p>.</span><span class=nx>value</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>...</span><span class=nx>spec</span><span class=p>.</span><span class=nx>value</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>data</span><span class=o>:</span> <span class=p>{</span> <span class=nx>values</span><span class=o>:</span> <span class=nx>data</span><span class=p>.</span><span class=nx>freeServerCountBySuit</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2025-02-28&nbsp;<a class=git-hash href=https://github.com/pjimming/blog/commit/96fa925106efbfc0e199865b9385ac98f9fa8b62 target=_blank title="commit by panjiangming(panjiangming@kuaishou.com) 96fa925106efbfc0e199865b9385ac98f9fa8b62: vue/vchart">
+<i class="fas fa-hashtag fa-fw" aria-hidden=true></i>96fa925</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/2025-02-28/vchart/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://blog.pjmcode.top/2025-02-28/vchart/ data-title=Vue封装VChart组件，实现简单易用的图表><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://blog.pjmcode.top/2025-02-28/vchart/><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Hacker News" data-sharer=hackernews data-url=https://blog.pjmcode.top/2025-02-28/vchart/ data-title=Vue封装VChart组件，实现简单易用的图表><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://blog.pjmcode.top/2025-02-28/vchart/ data-title=Vue封装VChart组件，实现简单易用的图表><i data-svg-src=/lib/simple-icons/icons/line.min.svg aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://blog.pjmcode.top/2025-02-28/vchart/ data-title=Vue封装VChart组件，实现简单易用的图表 data-image=https://cdn-cf.pjmcode.top/picgo/1740743929.png><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/2025-01-26/acm-dev-container/ class=prev rel=prev title="使用Dev Container打造轻量级算法竞赛环境"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>使用Dev Container打造轻量级算法竞赛环境</a></div></div><div id=comments><div id=giscus class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://giscus.app>Giscus</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><span id=run-time></span></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2024 - 2025</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank></a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=备案编号" target=_blank>浙ICP备2024074882号</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/lightgallery/css/lightgallery-bundle.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/contrib/auto-render.min.js></script><script type=text/javascript src=/lib/katex/contrib/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:-1},comment:{giscus:{category:"Announcements",categoryId:"DIC_kwDOLZmgDc4Cdm7x",darkTheme:"preferred_color_scheme",emitMetadata:"0",inputPosition:"top",lang:"zh-CN",lazyLoading:!1,lightTheme:"light",mapping:"pathname",reactionsEnabled:"1",repo:"pjimming/blog-comment",repoId:"R_kgDOLZmgDQ"}},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",lunrLanguageCode:"zh",lunrSegmentitURL:"/lib/lunr/lunr.segmentit.js",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.staticfile.net/jquery/2.2.4/jquery.min.js></script><script type=text/javascript src=/js/custom.js></script></body></html>
