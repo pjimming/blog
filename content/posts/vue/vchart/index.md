@@ -10,8 +10,8 @@ description: ""
 license: ""
 images: []
 
-tags: []
-categories: []
+tags: [vue, vchart, 前端]
+categories: [vue]
 
 featuredImage: "https://cdn-cf.pjmcode.top/picgo/1740743929.png"
 featuredImagePreview: "https://cdn-cf.pjmcode.top/picgo/1740743929.png"
