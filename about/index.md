@@ -20,20 +20,18 @@
 
 评论系统：[Giscus](https://github.com/giscus/giscus)
 
-图床工具：[PicX](https://github.com/XPoet/picx)
+图床工具：[PicGo](https://picgo.github.io/PicGo-Doc/)
 
-Static CDN：[jsDelivr](https://www.jsdelivr.com/)
+CDN：[CloudFlare](https://www.cloudflare.com/zh-cn/)
 {{< /admonition >}}
 
 ## 关于我
 
-我是潘江明，始于 2001-09-05，杭州。
-
-一个有奇怪想法、整天逼逼叨叨或沉默不语的人，一个无趣的人。
+我是潘江明，00 后，浙江杭州人，现居北京。
 
 本科就读于浙江科技大学（2020.9 ~ 2024.6）工学学士，计算机科学与技术。
 
-ACM 败犬，野生 Gopher，帝都西二旗打工人。
+ACM 败犬，野生 Gopher，会点前端，SRE，帝都西二旗打工人。
 
 爱好：自驾游，编程，美女。
 
